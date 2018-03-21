@@ -1,0 +1,24 @@
+﻿using PosRi.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using PosRi.Models.Helper;
+using PosRi.Models.Request;
+using PosRi.Models.Response;
+
+namespace PosRi.Services.Contracts
+{
+    public interface IUserService
+    {
+        Task<IEnumerable<UserWithManyToManyRelation>> GetUsers();
+
+        Task<UserWithManyToManyRelation> GetUser(int userId);
+
+        Task<User> Authenticate(LoginDto login);
+
+        Task<bool> UserExists(NewUserDto newUser);
+
+        Task<int> AddUser(NewUserDto newUser);
+    }
+}
