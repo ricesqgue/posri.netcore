@@ -38,7 +38,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -58,7 +58,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route}/{id} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route}/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -90,7 +90,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"POST {Route} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"POST {Route} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -128,7 +128,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"PUT {Route} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"PUT {Route} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -159,7 +159,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"DELETE {Route}/{id} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"DELETE {Route}/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -179,13 +179,13 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
 
         [HttpGet("{categoryId}/subcategories/{id}")]
-        public async Task<IActionResult> GetCategory([FromRoute] int categoryId, [FromRoute] int id)
+        public async Task<IActionResult> GetSubCategory([FromRoute] int categoryId, [FromRoute] int id)
         {
             try
             {
@@ -203,7 +203,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories/{id} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -240,7 +240,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"POST {Route}/{categoryId}/subcategories - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"POST {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -283,7 +283,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"PUT {Route}/{categoryId}/subcategories - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"PUT {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
@@ -319,7 +319,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"DELETE {Route}/{id} - {e.GetType()} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"DELETE {Route}/{categoryId}/subcategories/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
