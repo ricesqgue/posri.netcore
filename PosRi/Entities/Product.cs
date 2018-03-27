@@ -37,9 +37,13 @@ namespace PosRi.Entities
         [ForeignKey("SizeId")]
         public Size Size { get; set; }
 
-        public int ColorId { get; set; }
-        [ForeignKey("ColorId")]
-        public Color Color { get; set; }
+        public int ColorPrimaryId { get; set; }
+        [ForeignKey("ColorPrimaryId")]
+        public Color ColorPrimary { get; set; }
+
+        public int ColorSecondaryId { get; set; }
+        [ForeignKey("ColorSecondaryId")]
+        public Color ColorSecondary { get; set; }
 
         public int ProductHeaderId { get; set; }
         [ForeignKey("ProductHeaderId")]

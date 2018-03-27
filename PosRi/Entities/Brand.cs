@@ -8,7 +8,6 @@ namespace PosRi.Entities
 {
     public class Brand
     {
-
         public int Id { get; set; }
         
         [Required]

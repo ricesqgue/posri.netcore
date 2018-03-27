@@ -11,9 +11,10 @@ using System;
 namespace PosRi.Migrations
 {
     [DbContext(typeof(PosRiContext))]
-    partial class PosRiContextModelSnapshot : ModelSnapshot
+    [Migration("20180327030324_rgbPropToColorTableFix")]
+    partial class rgbPropToColorTableFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,7 +259,9 @@ namespace PosRi.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
-                    b.Property<int>("ColorId");
+                    b.Property<int>("ColorPrimaryId");
+
+                    b.Property<int>("ColorSecondaryId");
 
                     b.Property<DateTime>("CreateDate");
 
@@ -279,7 +282,9 @@ namespace PosRi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorId");
+                    b.HasIndex("ColorPrimaryId");
+
+                    b.HasIndex("ColorSecondaryId");
 
                     b.HasIndex("ProductHeaderId");
 
@@ -750,9 +755,14 @@ namespace PosRi.Migrations
 
             modelBuilder.Entity("PosRi.Entities.Product", b =>
                 {
-                    b.HasOne("PosRi.Entities.Color", "Color")
+                    b.HasOne("PosRi.Entities.Color", "ColorPrimary")
                         .WithMany()
-                        .HasForeignKey("ColorId")
+                        .HasForeignKey("ColorPrimaryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PosRi.Entities.Color", "ColorSecondary")
+                        .WithMany()
+                        .HasForeignKey("ColorSecondaryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PosRi.Entities.ProductHeader", "ProductHeader")

@@ -14,6 +14,11 @@ namespace PosRi.Entities
         [MaxLength(25)]
         public string Name { get; set; }
 
+        [MaxLength(6)]
+        [Required]
+        public string RgbHex { get; set; }
+
+
         [Required]
         public bool IsActive { get; set; } = true;
 
