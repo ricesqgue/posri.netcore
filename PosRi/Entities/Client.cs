@@ -15,7 +15,7 @@ namespace PosRi.Entities
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [MaxLength(00)]
+        [MaxLength(100)]
         public string Address { get; set; }
 
         [MaxLength(50)]
@@ -32,7 +32,7 @@ namespace PosRi.Entities
         public string Phone { get; set; }
 
         [Required]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         [Required]
         public bool IsActive { get; set; } = true;

@@ -66,6 +66,7 @@ namespace PosRi
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICashRegisterService, CashRegisterService>();
             services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<IColorService, ColorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +106,7 @@ namespace PosRi
                 cfg.CreateMap<Entities.SubCategory, Models.Response.SubCategoryDto>();
                 cfg.CreateMap<Entities.CashRegister, Models.Response.CashRegisterDto>();
                 cfg.CreateMap<Entities.Brand, Models.Response.BrandDto>();
+                cfg.CreateMap<Entities.Color, Models.Response.ColorDto>();
 
             });
 

@@ -15,7 +15,7 @@ namespace PosRi.Entities
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [MaxLength(00)]
+        [MaxLength(100)]
         public string Address { get; set; }
 
         [MaxLength(50)]

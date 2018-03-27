@@ -11,9 +11,10 @@ using System;
 namespace PosRi.Migrations
 {
     [DbContext(typeof(PosRiContext))]
-    partial class PosRiContextModelSnapshot : ModelSnapshot
+    [Migration("20180327033113_VendorAndClientAddressFieldFix")]
+    partial class VendorAndClientAddressFieldFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,7 +222,7 @@ namespace PosRi.Migrations
 
                     b.Property<string>("RgbHex")
                         .IsRequired()
-                        .HasMaxLength(7);
+                        .HasMaxLength(6);
 
                     b.HasKey("Id");
 
