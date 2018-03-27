@@ -6,34 +6,34 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PosRi.Models.Request.Color;
+using PosRi.Models.Request.Size;
 using PosRi.Models.Response;
 using PosRi.Services.Contracts;
 
 namespace PosRi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/color")]
-    public class ColorController : Controller
+    [Route("api/size")]
+    public class SizeController : Controller
     {
-        private readonly IColorService _colorService;
-        private readonly ILogger<ColorController> _logger;
+        private readonly ISizeService _sizeService;
+        private readonly ILogger<SizeController> _logger;
 
-        private const string Route = "api/color";
+        private const string Route = "api/size";
 
-        public ColorController(IColorService colorService, ILogger<ColorController> logger)
+        public SizeController(ISizeService sizeService, ILogger<SizeController> logger)
         {
-            _colorService = colorService;
+            _sizeService = sizeService;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetColors()
+        public async Task<IActionResult> GetSizes()
         {
             try
             {
-                var colors = await _colorService.GetColors();
-                var results = Mapper.Map<IEnumerable<ColorDto>>(colors);
+                var sizes = await _sizeService.GetSizes();
+                var results = Mapper.Map<IEnumerable<SizeDto>>(sizes);
                 return Ok(results);
             }
             catch (Exception e)
@@ -44,15 +44,15 @@ namespace PosRi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetColor([FromRoute] int id)
+        public async Task<IActionResult> GetSize([FromRoute] int id)
         {
             try
             {
-                var color = await _colorService.GetColor(id);
-                if (color == null)
+                var size = await _sizeService.GetSize(id);
+                if (size == null)
                     return NotFound();
 
-                var result = Mapper.Map<ColorDto>(color);
+                var result = Mapper.Map<SizeDto>(size);
 
                 return Ok(result);
             }
@@ -64,7 +64,7 @@ namespace PosRi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddColor([FromBody] NewColorDto newColor)
+        public async Task<IActionResult> AddSize([FromBody] NewSizeDto newSize)
         {
             try
             {
@@ -73,17 +73,17 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _colorService.IsDuplicateColor(newColor))
+                if (await _sizeService.IsDuplicateSize(newSize))
                 {
-                    ModelState.AddModelError("color", "Color already exists");
+                    ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var colorId = await _colorService.AddColor(newColor);
+                var sizeId = await _sizeService.AddSize(newSize);
 
-                if (colorId > 0)
+                if (sizeId > 0)
                 {
-                    return Ok(colorId);
+                    return Ok(sizeId);
                 }
 
                 return StatusCode(500, "An error ocurred in server");
@@ -96,7 +96,7 @@ namespace PosRi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditColor([FromBody] EditColorDto color)
+        public async Task<IActionResult> EditSize([FromBody] EditSizeDto size)
         {
             try
             {
@@ -105,21 +105,21 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _colorService.ColorExists(color.Id))
+                if (!await _sizeService.SizeExists(size.Id))
                 {
-                    ModelState.AddModelError("color", "Color not found");
+                    ModelState.AddModelError("size", "Size not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _colorService.IsDuplicateColor(color))
+                if (await _sizeService.IsDuplicateSize(size))
                 {
-                    ModelState.AddModelError("color", "Color already exists");
+                    ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasColorEdited = await _colorService.EditColor(color);
+                var wasSizeEdited = await _sizeService.EditSize(size);
 
-                if (wasColorEdited)
+                if (wasSizeEdited)
                 {
                     return NoContent();
                 }
@@ -134,7 +134,7 @@ namespace PosRi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteColor([FromRoute]int id)
+        public async Task<IActionResult> DeleteSize([FromRoute]int id)
         {
             try
             {
@@ -143,14 +143,14 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _colorService.ColorExists(id))
+                if (!await _sizeService.SizeExists(id))
                 {
                     return NotFound();
                 }
 
-                var wasColorDeleted = await _colorService.DeleteColor(id);
+                var wasSizeDeleted = await _sizeService.DeleteSize(id);
 
-                if (wasColorDeleted)
+                if (wasSizeDeleted)
                 {
                     return NoContent();
                 }

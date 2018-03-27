@@ -13,7 +13,7 @@ using PosRi.Services.Contracts;
 namespace PosRi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Brand")]
+    [Route("api/brand")]
     public class BrandController : Controller
     {
         private readonly IBrandService _brandService;
