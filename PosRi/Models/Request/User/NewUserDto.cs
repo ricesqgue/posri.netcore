@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using PosRi.Models.Response;
 
-namespace PosRi.Models.Request
+namespace PosRi.Models.Request.User
 {
     public class NewUserDto
     {
@@ -24,8 +23,8 @@ namespace PosRi.Models.Request
         public DateTime HireDate { get; set; }
 
         [Required]
-        public ICollection<int> Roles { get; set; }
+        public ICollection<RoleDto> Roles { get; set; }
 
-        public ICollection<int> Stores { get; set; } = new List<int> { 1 };
+        public ICollection<StoreDto> Stores { get; set; }
     }
 }

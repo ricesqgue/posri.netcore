@@ -12,7 +12,7 @@ namespace PosRi.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(25)]
+        [MaxLength(75)]
         public string Name { get; set; }
 
         [Required]

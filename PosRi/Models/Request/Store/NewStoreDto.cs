@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PosRi.Entities;
 
-namespace PosRi.Models.Request
+namespace PosRi.Models.Request.Store
 {
     public class NewStoreDto
     {

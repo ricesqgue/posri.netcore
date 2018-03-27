@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PosRi.Entities;
 using PosRi.Entities.Context;
 using PosRi.Models.Helper;
-using PosRi.Models.Request;
-using PosRi.Models.Response;
+using PosRi.Models.Request.Store;
+using PosRi.Services.Contracts;
 
-namespace PosRi.Services.Contracts
+namespace PosRi.Services
 {
     public class StoreService : IStoreService
     {
@@ -30,12 +28,21 @@ namespace PosRi.Services.Contracts
         public async Task<Store> GetStore(int storeId)
         {
             return await _dbContext.Stores.FirstOrDefaultAsync(store => store.Id == storeId && store.IsActive);
-
         }
 
-        public async Task<bool> StoreExists(NewStoreDto newStore)
+        public async Task<bool> IsDuplicateStore(NewStoreDto newStore)
         {
             return await _dbContext.Stores.AnyAsync(store => store.Name == newStore.Name && store.IsActive);
+        }
+
+        public async Task<bool> IsDuplicateStore(EditStoreDto editStore)
+        {
+            return await _dbContext.Stores.AnyAsync(store => store.Name == editStore.Name && store.Id != editStore.Id && store.IsActive);
+        }
+
+        public async Task<bool> StoreExists(int id)
+        {
+            return await _dbContext.Stores.AnyAsync(store => store.Id == id && store.IsActive);
         }
 
         public async Task<int> AddStore(NewStoreDto newStore)
@@ -56,6 +63,24 @@ namespace PosRi.Services.Contracts
             }
 
             return 0;
+        }
+
+        public async Task<bool> EditStore(EditStoreDto editStore)
+        {
+            var store = await _dbContext.Stores.FindAsync(editStore.Id);
+            store.Name = editStore.Name;
+            store.Address = editStore.Address;
+            store.Phone = editStore.Phone;
+
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteStore(int id)
+        {
+            var store = await _dbContext.Stores.FindAsync(id);
+            store.IsActive = false;
+
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task<IEnumerable<UserWithManyToManyRelation>> GetUsersByStore(int storeId)

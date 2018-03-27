@@ -63,11 +63,15 @@ namespace PosRi
             //Dependency Injection
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IStoreService, StoreService>();
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, PosRiContext posRiContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, PosRiContext posRiContext)
         {
+            loggerFactory.AddConsole();
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,6 +99,8 @@ namespace PosRi
                 cfg.CreateMap<Entities.User, Models.Response.UserDto>();
                 cfg.CreateMap<Entities.Role, Models.Response.RoleDto>();
                 cfg.CreateMap<Entities.Store, Models.Response.StoreDto>();
+                cfg.CreateMap<Entities.Category, Models.Response.CategoryDto>();
+                cfg.CreateMap<Entities.SubCategory, Models.Response.SubCategoryDto>();
 
             });
 
