@@ -121,10 +121,11 @@ namespace PosRi.Controllers
 
                 if (wasSizeEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -152,10 +153,11 @@ namespace PosRi.Controllers
 
                 if (wasSizeDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {

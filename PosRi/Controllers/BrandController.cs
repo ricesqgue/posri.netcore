@@ -121,10 +121,10 @@ namespace PosRi.Controllers
 
                 if (wasBrandEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
             }
             catch (Exception e)
             {
@@ -152,10 +152,10 @@ namespace PosRi.Controllers
 
                 if (wasBrandDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
             }
             catch (Exception e)
             {

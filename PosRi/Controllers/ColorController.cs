@@ -121,10 +121,11 @@ namespace PosRi.Controllers
 
                 if (wasColorEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -152,10 +153,11 @@ namespace PosRi.Controllers
 
                 if (wasColorDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {

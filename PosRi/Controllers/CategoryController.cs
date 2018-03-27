@@ -121,10 +121,10 @@ namespace PosRi.Controllers
 
                 if (wasCategoryEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
             }
             catch (Exception e)
             {
@@ -152,10 +152,11 @@ namespace PosRi.Controllers
 
                 if (wasCategoryDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -276,10 +277,11 @@ namespace PosRi.Controllers
 
                 if (wasSubCategoryEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -312,10 +314,11 @@ namespace PosRi.Controllers
 
                 if (wasSubCategoryDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {

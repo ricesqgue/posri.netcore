@@ -145,10 +145,11 @@ namespace PosRi.Controllers
 
                 if (wasUserEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -176,10 +177,11 @@ namespace PosRi.Controllers
 
                 if (wasUserDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {

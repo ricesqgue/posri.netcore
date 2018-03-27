@@ -141,10 +141,11 @@ namespace PosRi.Controllers
 
                 if (wasStoreEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -172,10 +173,11 @@ namespace PosRi.Controllers
 
                 if (wasStoreDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -296,10 +298,11 @@ namespace PosRi.Controllers
 
                 if (wasCashRegisterEdited)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
@@ -332,10 +335,11 @@ namespace PosRi.Controllers
 
                 if (wasCashRegisterDeleted)
                 {
-                    return NoContent();
+                    return Ok();
                 }
 
-                return StatusCode(500, "An error ocurred in server");
+                return NoContent();
+
             }
             catch (Exception e)
             {
