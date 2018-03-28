@@ -11,9 +11,10 @@ using System;
 namespace PosRi.Migrations
 {
     [DbContext(typeof(PosRiContext))]
-    partial class PosRiContextModelSnapshot : ModelSnapshot
+    [Migration("20180328021905_AbreviationToStateModel")]
+    partial class AbreviationToStateModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -471,7 +472,7 @@ namespace PosRi.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("ShortName")
+                    b.Property<string>("ShorName")
                         .IsRequired()
                         .HasMaxLength(5);
 

@@ -56,7 +56,7 @@ namespace PosRi
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "PosRi API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT with bearer into field", Name = "Authorization", Type = "apiKey" });
             });
 
@@ -68,6 +68,9 @@ namespace PosRi
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<IColorService, ColorService>();
             services.AddTransient<ISizeService, SizeService>();
+            services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IVendorService, VendorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,7 +88,7 @@ namespace PosRi
                 app.UseExceptionHandler();
             }
 
-           //posRiContext.EnsureSeedDataForContext();
+           posRiContext.EnsureSeedDataForContext();
 
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -109,7 +112,9 @@ namespace PosRi
                 cfg.CreateMap<Entities.Brand, Models.Response.BrandDto>();
                 cfg.CreateMap<Entities.Color, Models.Response.ColorDto>();
                 cfg.CreateMap<Entities.Size, Models.Response.SizeDto>();
-
+                cfg.CreateMap<Entities.State, Models.Response.StateDto>();
+                cfg.CreateMap<Entities.Client, Models.Response.ClientDto>();
+                cfg.CreateMap<Entities.Vendor, Models.Response.VendorDto>();
             });
 
             //

@@ -11,9 +11,10 @@ using System;
 namespace PosRi.Migrations
 {
     [DbContext(typeof(PosRiContext))]
-    partial class PosRiContextModelSnapshot : ModelSnapshot
+    [Migration("20180328022038_AbreviationToStateModelFix")]
+    partial class AbreviationToStateModelFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
