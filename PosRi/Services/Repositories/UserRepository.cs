@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PosRi.Entities;
 using PosRi.Entities.Context;
 using PosRi.Models.Helper;
 using PosRi.Models.Request;
 using PosRi.Models.Request.User;
-using PosRi.Models.Response;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public UserService(PosRiContext dbContext)
+        public UserRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

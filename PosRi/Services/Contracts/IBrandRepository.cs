@@ -7,7 +7,7 @@ using PosRi.Models.Request.Brand;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IBrandService
+    public interface IBrandRepository
     {
         Task<Brand> GetBrand(int id);
 

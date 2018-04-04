@@ -18,12 +18,12 @@ namespace PosRi.Controllers
     [Route("api/vendor")]
     public class VendorController : Controller
     {
-        private readonly IVendorService _vendorService;
+        private readonly IVendorRepository _vendorService;
         private readonly ILogger<VendorController> _logger;
 
         private const string Route = "api/vendor";
 
-        public VendorController(IVendorService vendorService, ILogger<VendorController> logger)
+        public VendorController(IVendorRepository vendorService, ILogger<VendorController> logger)
         {
             _vendorService = vendorService;
             _logger = logger;

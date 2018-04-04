@@ -10,7 +10,7 @@ using PosRi.Models.Response;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IUserService
+    public interface IUserRepository
     {
         Task<IEnumerable<UserWithManyToManyRelation>> GetUsers();
 

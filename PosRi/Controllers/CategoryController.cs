@@ -16,12 +16,12 @@ namespace PosRi.Controllers
     [Route("api/category")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryRepository _categoryService;
         private readonly ILogger<CategoryController> _logger;
 
         private const string Route = "api/category";
 
-        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
+        public CategoryController(ICategoryRepository categoryService, ILogger<CategoryController> logger)
         {
             _categoryService = categoryService;
             _logger = logger;

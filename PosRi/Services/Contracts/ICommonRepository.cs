@@ -6,7 +6,7 @@ using PosRi.Entities;
 
 namespace PosRi.Services.Contracts
 {
-    public interface ICommonService
+    public interface ICommonRepository
     {
         Task<ICollection<State>> GetStates();
     }

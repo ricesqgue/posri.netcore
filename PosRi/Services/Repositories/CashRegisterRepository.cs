@@ -8,13 +8,13 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.CashRegister;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class CashRegisterService : ICashRegisterService
+    public class CashRegisterRepository : ICashRegisterRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public CashRegisterService(PosRiContext dbContext)
+        public CashRegisterRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

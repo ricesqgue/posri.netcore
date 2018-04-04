@@ -25,9 +25,9 @@ namespace PosRi.Controllers
     public class LoginController : Controller
     {
         private readonly IConfiguration _config;
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userService;
 
-        public LoginController(IConfiguration config, IUserService userService)
+        public LoginController(IConfiguration config, IUserRepository userService)
         {
             _config = config;
             _userService = userService;

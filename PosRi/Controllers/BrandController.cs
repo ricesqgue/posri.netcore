@@ -16,12 +16,12 @@ namespace PosRi.Controllers
     [Route("api/brand")]
     public class BrandController : Controller
     {
-        private readonly IBrandService _brandService;
+        private readonly IBrandRepository _brandService;
         private readonly ILogger<BrandController> _logger;
 
         private const string Route = "api/brand";
 
-        public BrandController(IBrandService brandService, ILogger<BrandController> logger)
+        public BrandController(IBrandRepository brandService, ILogger<BrandController> logger)
         {
             _brandService = brandService;
             _logger = logger;

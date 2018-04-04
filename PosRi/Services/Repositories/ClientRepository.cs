@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using PosRi.Entities;
 using PosRi.Entities.Context;
 using PosRi.Models.Request.Client;
+using PosRi.Services.Contracts;
 
-namespace PosRi.Services.Contracts
+namespace PosRi.Services.Repositories
 {
-    public class ClientService : IClientService
+    public class ClientRepository : IClientRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public ClientService(PosRiContext dbContext)
+        public ClientRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -16,12 +16,12 @@ namespace PosRi.Controllers
     [Route("api/client")]
     public class ClientController : Controller
     {
-        private readonly IClientService _clientService;
+        private readonly IClientRepository _clientService;
         private readonly ILogger<ClientController> _logger;
 
         private const string Route = "api/client";
 
-        public ClientController(IClientService clientService, ILogger<ClientController> logger)
+        public ClientController(IClientRepository clientService, ILogger<ClientController> logger)
         {
             _clientService = clientService;
             _logger = logger;

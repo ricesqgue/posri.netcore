@@ -8,7 +8,7 @@ using PosRi.Models.Request.Store;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IStoreService
+    public interface IStoreRepository
     {
         Task<IEnumerable<Store>> GetStores();
 

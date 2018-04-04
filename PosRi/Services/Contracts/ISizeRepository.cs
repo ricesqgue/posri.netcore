@@ -7,7 +7,7 @@ using PosRi.Models.Request.Size;
 
 namespace PosRi.Services.Contracts
 {
-    public interface ISizeService
+    public interface ISizeRepository
     {
         Task<Size> GetSize(int id);
 

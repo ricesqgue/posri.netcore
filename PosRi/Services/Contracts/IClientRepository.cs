@@ -7,7 +7,7 @@ using PosRi.Models.Request.Client;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IClientService
+    public interface IClientRepository
     {
         Task<Client> GetClient(int id);
 

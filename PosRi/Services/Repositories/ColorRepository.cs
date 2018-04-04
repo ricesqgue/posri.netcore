@@ -8,13 +8,13 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.Color;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class ColorService : IColorService
+    public class ColorRepository : IColorRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public ColorService(PosRiContext dbContext)
+        public ColorRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

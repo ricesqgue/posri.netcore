@@ -16,12 +16,12 @@ namespace PosRi.Controllers
     [Route("api/size")]
     public class SizeController : Controller
     {
-        private readonly ISizeService _sizeService;
+        private readonly ISizeRepository _sizeService;
         private readonly ILogger<SizeController> _logger;
 
         private const string Route = "api/size";
 
-        public SizeController(ISizeService sizeService, ILogger<SizeController> logger)
+        public SizeController(ISizeRepository sizeService, ILogger<SizeController> logger)
         {
             _sizeService = sizeService;
             _logger = logger;

@@ -17,6 +17,7 @@ using PosRi.Entities.Context;
 using PosRi.Helpers.Extensions;
 using PosRi.Services;
 using PosRi.Services.Contracts;
+using PosRi.Services.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PosRi
@@ -61,16 +62,16 @@ namespace PosRi
             });
 
             //Dependency Injection
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IStoreService, StoreService>();
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<ICashRegisterService, CashRegisterService>();
-            services.AddTransient<IBrandService, BrandService>();
-            services.AddTransient<IColorService, ColorService>();
-            services.AddTransient<ISizeService, SizeService>();
-            services.AddTransient<ICommonService, CommonService>();
-            services.AddTransient<IClientService, ClientService>();
-            services.AddTransient<IVendorService, VendorService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICashRegisterRepository, CashRegisterRepository>();
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            services.AddTransient<IColorRepository, ColorRepository>();
+            services.AddTransient<ISizeRepository, SizeRepository>();
+            services.AddTransient<ICommonRepository, CommonRepository>();
+            services.AddTransient<IClientRepository, ClientRepository>();
+            services.AddTransient<IVendorRepository, VendorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

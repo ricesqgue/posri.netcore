@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +8,13 @@ using PosRi.Models.Helper;
 using PosRi.Models.Request.Store;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class StoreService : IStoreService
+    public class StoreRepository : IStoreRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public StoreService(PosRiContext dbContext)
+        public StoreRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -18,13 +18,13 @@ namespace PosRi.Controllers
     [Route("api/store")]
     public class StoreController : Controller
     {
-        private readonly IStoreService _storeService;
-        private readonly ICashRegisterService _cashRegisterService;
+        private readonly IStoreRepository _storeService;
+        private readonly ICashRegisterRepository _cashRegisterService;
         private readonly ILogger<StoreController> _logger;
 
         private const string Route = "api/store";
 
-        public StoreController(IStoreService storeService, ICashRegisterService cashRegisterService, ILogger<StoreController> logger)
+        public StoreController(IStoreRepository storeService, ICashRegisterRepository cashRegisterService, ILogger<StoreController> logger)
         {
             _storeService = storeService;
             _cashRegisterService = cashRegisterService;

@@ -8,13 +8,13 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.Vendor;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class VendorService : IVendorService
+    public class VendorRepository : IVendorRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public VendorService(PosRiContext dbContext)
+        public VendorRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

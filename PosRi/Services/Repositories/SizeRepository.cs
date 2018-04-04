@@ -8,13 +8,13 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.Size;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class SizeService : ISizeService
+    public class SizeRepository : ISizeRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public SizeService(PosRiContext dbContext)
+        public SizeRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

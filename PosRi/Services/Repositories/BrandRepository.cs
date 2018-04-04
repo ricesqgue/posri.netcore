@@ -8,13 +8,13 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.Brand;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class BrandService : IBrandService
+    public class BrandRepository : IBrandRepository
     {
         private readonly PosRiContext _dbContext;
 
-        public BrandService(PosRiContext dbContext)
+        public BrandRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }

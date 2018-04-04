@@ -16,12 +16,12 @@ namespace PosRi.Controllers
     [Route("api/color")]
     public class ColorController : Controller
     {
-        private readonly IColorService _colorService;
+        private readonly IColorRepository _colorService;
         private readonly ILogger<ColorController> _logger;
 
         private const string Route = "api/color";
 
-        public ColorController(IColorService colorService, ILogger<ColorController> logger)
+        public ColorController(IColorRepository colorService, ILogger<ColorController> logger)
         {
             _colorService = colorService;
             _logger = logger;

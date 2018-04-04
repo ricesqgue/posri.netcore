@@ -7,7 +7,7 @@ using PosRi.Models.Request.Color;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IColorService
+    public interface IColorRepository
     {
         Task<Color> GetColor(int id);
 

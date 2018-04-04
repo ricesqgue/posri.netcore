@@ -7,7 +7,7 @@ using PosRi.Models.Request.Category;
 
 namespace PosRi.Services.Contracts
 {
-    public interface ICategoryService
+    public interface ICategoryRepository
     {
         Task<Category> GetCategory(int id);
 

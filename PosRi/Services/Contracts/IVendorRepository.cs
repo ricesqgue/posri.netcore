@@ -7,7 +7,7 @@ using PosRi.Models.Request.Vendor;
 
 namespace PosRi.Services.Contracts
 {
-    public interface IVendorService
+    public interface IVendorRepository
     {
         Task<Vendor> GetVendor(int id);
 

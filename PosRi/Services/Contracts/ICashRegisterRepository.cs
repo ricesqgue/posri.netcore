@@ -7,7 +7,7 @@ using PosRi.Models.Request.CashRegister;
 
 namespace PosRi.Services.Contracts
 {
-    public interface ICashRegisterService
+    public interface ICashRegisterRepository
     {
         Task<CashRegister> GetCashRegister(int id);
 

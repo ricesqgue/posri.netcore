@@ -8,14 +8,14 @@ using PosRi.Entities.Context;
 using PosRi.Models.Request.Category;
 using PosRi.Services.Contracts;
 
-namespace PosRi.Services
+namespace PosRi.Services.Repositories
 {
-    public class CategoryService : ICategoryService
+    public class CategoryRepository : ICategoryRepository
     {
 
         private readonly PosRiContext _dbContext;
 
-        public CategoryService(PosRiContext dbContext)
+        public CategoryRepository(PosRiContext dbContext)
         {
             _dbContext = dbContext;
         }
