@@ -19,14 +19,14 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Client> GetClient(int id)
+        public async Task<Client> GetClientAsync(int id)
         {
             return await _dbContext.Clients
                     .Include(c => c.State)
                     .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Client>> GetClients()
+        public async Task<ICollection<Client>> GetClientsAsync()
         {
             return await _dbContext.Clients
                 .Include(c => c.State)
@@ -34,24 +34,24 @@ namespace PosRi.Services.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateClient(NewClientDto client)
+        public async Task<bool> IsDuplicateClientAsync(NewClientDto client)
         {
             return await _dbContext.Clients.AnyAsync(c =>
                 (c.Email.Equals(client.Email, StringComparison.InvariantCultureIgnoreCase) || c.Rfc.Equals(client.Rfc, StringComparison.InvariantCultureIgnoreCase)) && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateClient(EditClientDto client)
+        public async Task<bool> IsDuplicateClientAsync(EditClientDto client)
         {
             return await _dbContext.Clients.AnyAsync(c =>
                 (c.Email.Equals(client.Email, StringComparison.InvariantCultureIgnoreCase) || c.Rfc.Equals(client.Rfc, StringComparison.InvariantCultureIgnoreCase)) && c.Id != client.Id && c.IsActive);
         }
 
-        public async Task<bool> ClientExists(int id)
+        public async Task<bool> ClientExistsAsync(int id)
         {
             return await _dbContext.Clients.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddClient(NewClientDto newClient)
+        public async Task<int> AddClientAsync(NewClientDto newClient)
         {
             var client = new Client
             {
@@ -76,7 +76,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditClient(EditClientDto editClient)
+        public async Task<bool> EditClientAsync(EditClientDto editClient)
         {
             var client = await _dbContext.Clients.FindAsync(editClient.Id);
 
@@ -93,7 +93,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteClient(int id)
+        public async Task<bool> DeleteClientAsync(int id)
         {
             var client = await _dbContext.Clients.FindAsync(id);
 

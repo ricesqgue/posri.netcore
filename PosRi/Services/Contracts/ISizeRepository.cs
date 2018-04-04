@@ -9,20 +9,20 @@ namespace PosRi.Services.Contracts
 {
     public interface ISizeRepository
     {
-        Task<Size> GetSize(int id);
+        Task<Size> GetSizeAsync(int id);
 
-        Task<ICollection<Size>> GetSizes();
+        Task<ICollection<Size>> GetSizesAsync();
 
-        Task<bool> IsDuplicateSize(NewSizeDto size);
+        Task<bool> IsDuplicateSizeAsync(NewSizeDto size);
 
-        Task<bool> IsDuplicateSize(EditSizeDto size);
+        Task<bool> IsDuplicateSizeAsync(EditSizeDto size);
 
-        Task<bool> SizeExists(int id);
+        Task<bool> SizeExistsAsync(int id);
 
-        Task<int> AddSize(NewSizeDto newSize);
+        Task<int> AddSizeAsync(NewSizeDto newSize);
 
-        Task<bool> EditSize(EditSizeDto size);
+        Task<bool> EditSizeAsync(EditSizeDto size);
 
-        Task<bool> DeleteSize(int id);
+        Task<bool> DeleteSizeAsync(int id);
     }
 }

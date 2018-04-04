@@ -36,7 +36,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var stores = await _storeService.GetStores();
+                var stores = await _storeService.GetStoresAsync();
                 var results = Mapper.Map<IEnumerable<StoreDto>>(stores);
                 return Ok(results);
             }
@@ -52,7 +52,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var store = await _storeService.GetStore(id);
+                var store = await _storeService.GetStoreAsync(id);
                 if (store == null)
                     return NotFound();
 
@@ -72,7 +72,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var users = await _storeService.GetUsersByStore(id);
+                var users = await _storeService.GetUsersByStoreAsync(id);
                 var results = Mapper.Map<IEnumerable<UserDto>>(users);
                 return Ok(results);
             }
@@ -93,13 +93,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _storeService.IsDuplicateStore(newStore))
+                if (await _storeService.IsDuplicateStoreAsync(newStore))
                 {
                     ModelState.AddModelError("store", "Store already exists");
                     return BadRequest(ModelState);
                 }
 
-                var storeId = await _storeService.AddStore(newStore);
+                var storeId = await _storeService.AddStoreAsync(newStore);
 
                 if (storeId > 0)
                 {
@@ -125,19 +125,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _storeService.StoreExists(store.Id))
+                if (!await _storeService.StoreExistsAsync(store.Id))
                 {
                     ModelState.AddModelError("store", "Store not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _storeService.IsDuplicateStore(store))
+                if (await _storeService.IsDuplicateStoreAsync(store))
                 {
                     ModelState.AddModelError("store", "Store already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasStoreEdited = await _storeService.EditStore(store);
+                var wasStoreEdited = await _storeService.EditStoreAsync(store);
 
                 if (wasStoreEdited)
                 {
@@ -164,12 +164,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _storeService.StoreExists(id))
+                if (!await _storeService.StoreExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasStoreDeleted = await _storeService.DeleteStore(id);
+                var wasStoreDeleted = await _storeService.DeleteStoreAsync(id);
 
                 if (wasStoreDeleted)
                 {
@@ -191,11 +191,11 @@ namespace PosRi.Controllers
         {
             try
             {
-                if (!await _storeService.StoreExists(storeId))
+                if (!await _storeService.StoreExistsAsync(storeId))
                 {
                     return NotFound();
                 }
-                var cashRegisters = await _cashRegisterService.GetCashRegisters(storeId);
+                var cashRegisters = await _cashRegisterService.GetCashRegistersAsync(storeId);
                 var results = Mapper.Map<IEnumerable<CashRegisterDto>>(cashRegisters);
                 return Ok(results);
             }
@@ -211,11 +211,11 @@ namespace PosRi.Controllers
         {
             try
             {
-                if (!await _storeService.StoreExists(storeId))
+                if (!await _storeService.StoreExistsAsync(storeId))
                 {
                     return NotFound();
                 }
-                var cashRegister = await _cashRegisterService.GetCashRegister(id);
+                var cashRegister = await _cashRegisterService.GetCashRegisterAsync(id);
                 if (cashRegister == null)
                     return NotFound();
 
@@ -240,18 +240,18 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _storeService.StoreExists(storeId))
+                if (!await _storeService.StoreExistsAsync(storeId))
                 {
                     return NotFound();
                 }
 
-                if (await _cashRegisterService.IsDuplicateCashRegister(storeId, newCashRegister))
+                if (await _cashRegisterService.IsDuplicateCashRegisterAsync(storeId, newCashRegister))
                 {
                     ModelState.AddModelError("cashRegister", "Cash register already exists");
                     return BadRequest(ModelState);
                 }
 
-                var cashRegisterId = await _cashRegisterService.AddCashRegister(storeId, newCashRegister);
+                var cashRegisterId = await _cashRegisterService.AddCashRegisterAsync(storeId, newCashRegister);
 
                 if (cashRegisterId > 0)
                 {
@@ -277,24 +277,24 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _storeService.StoreExists(storeId))
+                if (!await _storeService.StoreExistsAsync(storeId))
                 {
                     return NotFound();
                 }
 
-                if (!await _cashRegisterService.CashRegisterExists(cashRegister.Id))
+                if (!await _cashRegisterService.CashRegisterExistsAsync(cashRegister.Id))
                 {
                     ModelState.AddModelError("cashRegister", "Cash register not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _cashRegisterService.IsDuplicateCashRegister(storeId, cashRegister))
+                if (await _cashRegisterService.IsDuplicateCashRegisterAsync(storeId, cashRegister))
                 {
                     ModelState.AddModelError("cashRegister", "Cash register already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasCashRegisterEdited = await _cashRegisterService.EditCashRegister(cashRegister);
+                var wasCashRegisterEdited = await _cashRegisterService.EditCashRegisterAsync(cashRegister);
 
                 if (wasCashRegisterEdited)
                 {
@@ -321,17 +321,17 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _storeService.StoreExists(storeId))
+                if (!await _storeService.StoreExistsAsync(storeId))
                 {
                     return NotFound();
                 }
 
-                if (!await _cashRegisterService.CashRegisterExists(id))
+                if (!await _cashRegisterService.CashRegisterExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasCashRegisterDeleted = await _cashRegisterService.DeleteCashRegister(id);
+                var wasCashRegisterDeleted = await _cashRegisterService.DeleteCashRegisterAsync(id);
 
                 if (wasCashRegisterDeleted)
                 {

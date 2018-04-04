@@ -9,37 +9,37 @@ namespace PosRi.Services.Contracts
 {
     public interface ICategoryRepository
     {
-        Task<Category> GetCategory(int id);
+        Task<Category> GetCategoryAsync(int id);
 
-        Task<ICollection<Category>> GetCategories();
+        Task<ICollection<Category>> GetCategoriesAsync();
 
-        Task<bool> IsDuplicateCategory(NewCategoryDto category);
+        Task<bool> IsDuplicateCategoryAsync(NewCategoryDto category);
 
-        Task<bool> IsDuplicateCategory(EditCategoryDto category);
+        Task<bool> IsDuplicateCategoryAsync(EditCategoryDto category);
 
-        Task<bool> CategoryExists(int id);
+        Task<bool> CategoryExistsAsync(int id);
 
-        Task<int> AddCategory(NewCategoryDto newCategory);
+        Task<int> AddCategoryAsync(NewCategoryDto newCategory);
 
-        Task<bool> EditCategory(EditCategoryDto category);
+        Task<bool> EditCategoryAsync(EditCategoryDto category);
 
-        Task<bool> DeleteCategory(int id);
+        Task<bool> DeleteCategoryAsync(int id);
 
-        Task<SubCategory> GetSubCategory(int id);
+        Task<SubCategory> GetSubCategoryAsync(int id);
 
-        Task<ICollection<SubCategory>> GetSubCategories(int categoryId);
+        Task<ICollection<SubCategory>> GetSubCategoriesAsync(int categoryId);
 
-        Task<bool> IsDuplicateSubCategory(int categoryId, NewSubCategoryDto subCategory);
+        Task<bool> IsDuplicateSubCategoryAsync(int categoryId, NewSubCategoryDto subCategory);
 
-        Task<bool> IsDuplicateSubCategory(int categoryId, EditSubCategoryDto subCategory);
+        Task<bool> IsDuplicateSubCategoryAsync(int categoryId, EditSubCategoryDto subCategory);
 
-        Task<bool> SubCategoryExists(int id);
+        Task<bool> SubCategoryExistsAsync(int id);
 
-        Task<int> AddSubCategory(int categoryId, NewSubCategoryDto newSubCategory);
+        Task<int> AddSubCategoryAsync(int categoryId, NewSubCategoryDto newSubCategory);
 
-        Task<bool> EditSubCategory(EditSubCategoryDto subCategory);
+        Task<bool> EditSubCategoryAsync(EditSubCategoryDto subCategory);
 
-        Task<bool> DeleteSubCategory(int id);
+        Task<bool> DeleteSubCategoryAsync(int id);
 
     }
 }

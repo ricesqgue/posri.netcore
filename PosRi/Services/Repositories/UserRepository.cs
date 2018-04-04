@@ -21,7 +21,7 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<UserWithManyToManyRelation>> GetUsers()
+        public async Task<IEnumerable<UserWithManyToManyRelation>> GetUsersAsync()
         {
             return await _dbContext.Users
             .Where(u => u.IsActive)
@@ -41,7 +41,7 @@ namespace PosRi.Services.Repositories
 
         }
 
-        public async Task<UserWithManyToManyRelation> GetUser(int userId)
+        public async Task<UserWithManyToManyRelation> GetUserAsync(int userId)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId && u.IsActive);
             if (user != null)
@@ -62,32 +62,32 @@ namespace PosRi.Services.Repositories
             return null;
         }
 
-        public async Task<User> Authenticate(LoginDto login)
+        public async Task<User> AuthenticateAsync(LoginDto login)
         {
             return await _dbContext.Users
                 .FirstOrDefaultAsync(user =>
                     user.Username.Equals(login.Username) && user.Password.Equals(login.Password) && user.IsActive);
         }
 
-        public async Task<bool> UserExists(int id)
+        public async Task<bool> UserExistsAsync(int id)
         {
             return await _dbContext.Users.AnyAsync(u => u.Id == id && u.IsActive);
         }
 
-        public async Task<bool> IsDuplicateUser(NewUserDto newUser)
+        public async Task<bool> IsDuplicateUserAsync(NewUserDto newUser)
         {
             return await _dbContext.Users
                 .AnyAsync(u => u.IsActive && u.Username.Equals(newUser.Username, StringComparison.InvariantCultureIgnoreCase));
 
         }
 
-        public async Task<bool> IsDuplicateUser(EditUserDto user)
+        public async Task<bool> IsDuplicateUserAsync(EditUserDto user)
         {
             return await _dbContext.Users
                 .AnyAsync(u => u.IsActive && u.Id != user.Id && u.Username.Equals(user.Username, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public async Task<int> AddUser(NewUserDto newUser)
+        public async Task<int> AddUserAsync(NewUserDto newUser)
         {
             var user = new User
             {
@@ -134,7 +134,7 @@ namespace PosRi.Services.Repositories
 
         }
 
-        public async Task<bool> EditUser(EditUserDto editUser)
+        public async Task<bool> EditUserAsync(EditUserDto editUser)
         {
             var user = _dbContext.Users.Find(editUser.Id);
 
@@ -172,7 +172,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteUser(int id)
+        public async Task<bool> DeleteUserAsync(int id)
         {
             var user = await _dbContext.Users.FindAsync(id);
 

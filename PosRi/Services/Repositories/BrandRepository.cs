@@ -19,37 +19,37 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Brand> GetBrand(int id)
+        public async Task<Brand> GetBrandAsync(int id)
         {
             return await _dbContext.Brands
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Brand>> GetBrands()
+        public async Task<ICollection<Brand>> GetBrandsAsync()
         {
             return await _dbContext.Brands
                 .Where(c => c.IsActive)
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateBrand(NewBrandDto brand)
+        public async Task<bool> IsDuplicateBrandAsync(NewBrandDto brand)
         {
             return await _dbContext.Brands.AnyAsync(c =>
                 c.Name.Equals(brand.Name, StringComparison.InvariantCultureIgnoreCase) && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateBrand(EditBrandDto brand)
+        public async Task<bool> IsDuplicateBrandAsync(EditBrandDto brand)
         {
             return await _dbContext.Brands.AnyAsync(c =>
                 c.Name.Equals(brand.Name, StringComparison.InvariantCultureIgnoreCase) && c.Id != brand.Id && c.IsActive);
         }
 
-        public async Task<bool> BrandExists(int id)
+        public async Task<bool> BrandExistsAsync(int id)
         {
             return await _dbContext.Brands.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddBrand(NewBrandDto newBrand)
+        public async Task<int> AddBrandAsync(NewBrandDto newBrand)
         {
             var brand = new Brand
             {
@@ -67,7 +67,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditBrand(EditBrandDto editBrand)
+        public async Task<bool> EditBrandAsync(EditBrandDto editBrand)
         {
             var brand = await _dbContext.Brands.FindAsync(editBrand.Id);
 
@@ -76,7 +76,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteBrand(int id)
+        public async Task<bool> DeleteBrandAsync(int id)
         {
             var brand = await _dbContext.Brands.FindAsync(id);
 

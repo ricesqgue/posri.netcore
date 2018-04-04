@@ -20,7 +20,7 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetCategoryAsync(int id)
         {
             return await _dbContext.Categories
                 .Include(c => c.SubCategories)
@@ -34,7 +34,7 @@ namespace PosRi.Services.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Category>> GetCategories()
+        public async Task<ICollection<Category>> GetCategoriesAsync()
         {
             return await _dbContext.Categories
                 .Include(c => c.SubCategories)
@@ -49,24 +49,24 @@ namespace PosRi.Services.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateCategory(NewCategoryDto category)
+        public async Task<bool> IsDuplicateCategoryAsync(NewCategoryDto category)
         {
             return await _dbContext.Categories.AnyAsync(c =>
                 c.Name.Equals(category.Name, StringComparison.InvariantCultureIgnoreCase) && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateCategory(EditCategoryDto category)
+        public async Task<bool> IsDuplicateCategoryAsync(EditCategoryDto category)
         {
             return await _dbContext.Categories.AnyAsync(c =>
                 c.Name.Equals(category.Name, StringComparison.InvariantCultureIgnoreCase) && c.Id != category.Id && c.IsActive);
         }
 
-        public async Task<bool> CategoryExists(int id)
+        public async Task<bool> CategoryExistsAsync(int id)
         {
             return await _dbContext.Categories.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddCategory(NewCategoryDto newCategory)
+        public async Task<int> AddCategoryAsync(NewCategoryDto newCategory)
         {
             var category = new Category
             {
@@ -84,7 +84,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditCategory(EditCategoryDto editCategory)
+        public async Task<bool> EditCategoryAsync(EditCategoryDto editCategory)
         {
             var category = await _dbContext.Categories.FindAsync(editCategory.Id);
 
@@ -93,7 +93,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteCategory(int id)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _dbContext.Categories.FindAsync(id);
 
@@ -102,34 +102,34 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<SubCategory> GetSubCategory(int id)
+        public async Task<SubCategory> GetSubCategoryAsync(int id)
         {
             return await _dbContext.SubCategories.FirstOrDefaultAsync(s => s.Id == id && s.IsActive);
         }
 
-        public async Task<ICollection<SubCategory>> GetSubCategories(int categoryId)
+        public async Task<ICollection<SubCategory>> GetSubCategoriesAsync(int categoryId)
         {
             return await _dbContext.SubCategories.Where(s => s.CategoryId == categoryId && s.IsActive).ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateSubCategory(int categoryId, NewSubCategoryDto subCategory)
+        public async Task<bool> IsDuplicateSubCategoryAsync(int categoryId, NewSubCategoryDto subCategory)
         {
             return await _dbContext.SubCategories.AnyAsync(c =>
                 c.Name.Equals(subCategory.Name, StringComparison.InvariantCultureIgnoreCase) && c.IsActive && c.CategoryId == categoryId);
         }
 
-        public async Task<bool> IsDuplicateSubCategory(int categoryId, EditSubCategoryDto subCategory)
+        public async Task<bool> IsDuplicateSubCategoryAsync(int categoryId, EditSubCategoryDto subCategory)
         {
             return await _dbContext.SubCategories.AnyAsync(c =>
                 c.Name.Equals(subCategory.Name, StringComparison.InvariantCultureIgnoreCase) && c.Id != subCategory.Id && c.IsActive && c.CategoryId == categoryId);
         }
 
-        public async Task<bool> SubCategoryExists(int id)
+        public async Task<bool> SubCategoryExistsAsync(int id)
         {
             return await _dbContext.SubCategories.AnyAsync(s => s.Id == id && s.IsActive);
         }
 
-        public async Task<int> AddSubCategory(int categoryId, NewSubCategoryDto newSubCategory)
+        public async Task<int> AddSubCategoryAsync(int categoryId, NewSubCategoryDto newSubCategory)
         {
             var subCategory = new SubCategory()
             {
@@ -148,7 +148,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditSubCategory(EditSubCategoryDto subCategory)
+        public async Task<bool> EditSubCategoryAsync(EditSubCategoryDto subCategory)
         {
             var subCategoryEdit = await _dbContext.SubCategories.FindAsync(subCategory.Id);
 
@@ -157,7 +157,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteSubCategory(int id)
+        public async Task<bool> DeleteSubCategoryAsync(int id)
         {
             var subCategory = await _dbContext.SubCategories.FindAsync(id);
 

@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var categories = await _categoryService.GetCategories();
+                var categories = await _categoryService.GetCategoriesAsync();
                 var results = Mapper.Map<IEnumerable<CategoryDto>>(categories);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var category = await _categoryService.GetCategory(id);
+                var category = await _categoryService.GetCategoryAsync(id);
                 if (category == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateCategory(newCategory))
+                if (await _categoryService.IsDuplicateCategoryAsync(newCategory))
                 {
                     ModelState.AddModelError("category", "Category already exists");
                     return BadRequest(ModelState);
                 }
 
-                var categoryId = await _categoryService.AddCategory(newCategory);
+                var categoryId = await _categoryService.AddCategoryAsync(newCategory);
 
                 if (categoryId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExists(category.Id))
+                if (!await _categoryService.CategoryExistsAsync(category.Id))
                 {
                     ModelState.AddModelError("category", "Category not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateCategory(category))
+                if (await _categoryService.IsDuplicateCategoryAsync(category))
                 {
                     ModelState.AddModelError("category", "Category already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasCategoryEdited = await _categoryService.EditCategory(category);
+                var wasCategoryEdited = await _categoryService.EditCategoryAsync(category);
 
                 if (wasCategoryEdited)
                 {
@@ -143,12 +143,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExists(id))
+                if (!await _categoryService.CategoryExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasCategoryDeleted = await _categoryService.DeleteCategory(id);
+                var wasCategoryDeleted = await _categoryService.DeleteCategoryAsync(id);
 
                 if (wasCategoryDeleted)
                 {
@@ -170,11 +170,11 @@ namespace PosRi.Controllers
         {
             try
             {
-                if (!await _categoryService.CategoryExists(categoryId))
+                if (!await _categoryService.CategoryExistsAsync(categoryId))
                 {
                     return NotFound();
                 }
-                var subCategories = await _categoryService.GetSubCategories(categoryId);
+                var subCategories = await _categoryService.GetSubCategoriesAsync(categoryId);
                 var results = Mapper.Map<IEnumerable<SubCategoryDto>>(subCategories);
                 return Ok(results);
             }
@@ -190,11 +190,11 @@ namespace PosRi.Controllers
         {
             try
             {
-                if (!await _categoryService.CategoryExists(categoryId))
+                if (!await _categoryService.CategoryExistsAsync(categoryId))
                 {
                     return NotFound();
                 }
-                var subCategory = await _categoryService.GetSubCategory(id);
+                var subCategory = await _categoryService.GetSubCategoryAsync(id);
                 if (subCategory == null)
                     return NotFound();
 
@@ -219,18 +219,18 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExists(categoryId))
+                if (!await _categoryService.CategoryExistsAsync(categoryId))
                 {
                     return NotFound();
                 }
 
-                if (await _categoryService.IsDuplicateSubCategory(categoryId, newSubCategory))
+                if (await _categoryService.IsDuplicateSubCategoryAsync(categoryId, newSubCategory))
                 {
                     ModelState.AddModelError("subCategory", "Subcategory already exists");
                     return BadRequest(ModelState);
                 }
 
-                var subCategoryId = await _categoryService.AddSubCategory(categoryId, newSubCategory);
+                var subCategoryId = await _categoryService.AddSubCategoryAsync(categoryId, newSubCategory);
 
                 if (subCategoryId > 0)
                 {
@@ -256,24 +256,24 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExists(categoryId))
+                if (!await _categoryService.CategoryExistsAsync(categoryId))
                 {
                     return NotFound();
                 }
 
-                if (!await _categoryService.SubCategoryExists(subCategory.Id))
+                if (!await _categoryService.SubCategoryExistsAsync(subCategory.Id))
                 {
                     ModelState.AddModelError("subCategory", "Sub category not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateSubCategory(categoryId, subCategory))
+                if (await _categoryService.IsDuplicateSubCategoryAsync(categoryId, subCategory))
                 {
                     ModelState.AddModelError("subCategory", "Sub category already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasSubCategoryEdited = await _categoryService.EditSubCategory(subCategory);
+                var wasSubCategoryEdited = await _categoryService.EditSubCategoryAsync(subCategory);
 
                 if (wasSubCategoryEdited)
                 {
@@ -300,17 +300,17 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExists(categoryId))
+                if (!await _categoryService.CategoryExistsAsync(categoryId))
                 {
                     return NotFound();
                 }
 
-                if (!await _categoryService.SubCategoryExists(id))
+                if (!await _categoryService.SubCategoryExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasSubCategoryDeleted = await _categoryService.DeleteSubCategory(id);
+                var wasSubCategoryDeleted = await _categoryService.DeleteSubCategoryAsync(id);
 
                 if (wasSubCategoryDeleted)
                 {

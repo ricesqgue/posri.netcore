@@ -41,7 +41,7 @@ namespace PosRi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var user = await _userService.Authenticate(login);
+            var user = await _userService.AuthenticateAsync(login);
 
             if (user == null)
                 return Unauthorized();

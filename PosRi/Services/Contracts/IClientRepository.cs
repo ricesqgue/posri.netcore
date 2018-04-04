@@ -9,21 +9,21 @@ namespace PosRi.Services.Contracts
 {
     public interface IClientRepository
     {
-        Task<Client> GetClient(int id);
+        Task<Client> GetClientAsync(int id);
 
-        Task<ICollection<Client>> GetClients();
+        Task<ICollection<Client>> GetClientsAsync();
 
-        Task<bool> IsDuplicateClient(NewClientDto client);
+        Task<bool> IsDuplicateClientAsync(NewClientDto client);
 
-        Task<bool> IsDuplicateClient(EditClientDto client);
+        Task<bool> IsDuplicateClientAsync(EditClientDto client);
 
-        Task<bool> ClientExists(int id);
+        Task<bool> ClientExistsAsync(int id);
 
-        Task<int> AddClient(NewClientDto newClient);
+        Task<int> AddClientAsync(NewClientDto newClient);
 
-        Task<bool> EditClient(EditClientDto client);
+        Task<bool> EditClientAsync(EditClientDto client);
 
-        Task<bool> DeleteClient(int id);
+        Task<bool> DeleteClientAsync(int id);
     }
 
 }

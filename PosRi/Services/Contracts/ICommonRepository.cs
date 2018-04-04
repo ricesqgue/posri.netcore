@@ -8,6 +8,6 @@ namespace PosRi.Services.Contracts
 {
     public interface ICommonRepository
     {
-        Task<ICollection<State>> GetStates();
+        Task<ICollection<State>> GetStatesAsync();
     }
 }

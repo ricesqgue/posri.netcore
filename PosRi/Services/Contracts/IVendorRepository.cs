@@ -9,20 +9,20 @@ namespace PosRi.Services.Contracts
 {
     public interface IVendorRepository
     {
-        Task<Vendor> GetVendor(int id);
+        Task<Vendor> GetVendorAsync(int id);
 
-        Task<ICollection<Vendor>> GetVendors();
+        Task<ICollection<Vendor>> GetVendorsAsync();
 
-        Task<bool> IsDuplicateVendor(NewVendorDto vendor);
+        Task<bool> IsDuplicateVendorAsync(NewVendorDto vendor);
 
-        Task<bool> IsDuplicateVendor(EditVendorDto vendor);
+        Task<bool> IsDuplicateVendorAsync(EditVendorDto vendor);
 
-        Task<bool> VendorExists(int id);
+        Task<bool> VendorExistsAsync(int id);
 
-        Task<int> AddVendor(NewVendorDto newVendor);
+        Task<int> AddVendorAsync(NewVendorDto newVendor);
 
-        Task<bool> EditVendor(EditVendorDto vendor);
+        Task<bool> EditVendorAsync(EditVendorDto vendor);
 
-        Task<bool> DeleteVendor(int id);
+        Task<bool> DeleteVendorAsync(int id);
     }
 }

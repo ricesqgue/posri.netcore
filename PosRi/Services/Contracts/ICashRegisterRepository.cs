@@ -9,20 +9,20 @@ namespace PosRi.Services.Contracts
 {
     public interface ICashRegisterRepository
     {
-        Task<CashRegister> GetCashRegister(int id);
+        Task<CashRegister> GetCashRegisterAsync(int id);
 
-        Task<ICollection<CashRegister>> GetCashRegisters(int storeId);
+        Task<ICollection<CashRegister>> GetCashRegistersAsync(int storeId);
 
-        Task<bool> IsDuplicateCashRegister(int storeId, NewCashRegisterDto cashRegister);
+        Task<bool> IsDuplicateCashRegisterAsync(int storeId, NewCashRegisterDto cashRegister);
 
-        Task<bool> IsDuplicateCashRegister(int storeId, EditCashRegisterDto cashRegister);
+        Task<bool> IsDuplicateCashRegisterAsync(int storeId, EditCashRegisterDto cashRegister);
 
-        Task<bool> CashRegisterExists(int id);
+        Task<bool> CashRegisterExistsAsync(int id);
 
-        Task<int> AddCashRegister(int storeId, NewCashRegisterDto newCashRegister);
+        Task<int> AddCashRegisterAsync(int storeId, NewCashRegisterDto newCashRegister);
 
-        Task<bool> EditCashRegister(EditCashRegisterDto cashRegister);
+        Task<bool> EditCashRegisterAsync(EditCashRegisterDto cashRegister);
 
-        Task<bool> DeleteCashRegister(int id);
+        Task<bool> DeleteCashRegisterAsync(int id);
     }
 }

@@ -19,20 +19,20 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Color> GetColor(int id)
+        public async Task<Color> GetColorAsync(int id)
         {
             return await _dbContext.Colors
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Color>> GetColors()
+        public async Task<ICollection<Color>> GetColorsAsync()
         {
             return await _dbContext.Colors
                 .Where(c => c.IsActive)
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateColor(NewColorDto color)
+        public async Task<bool> IsDuplicateColorAsync(NewColorDto color)
         {
             return await _dbContext.Colors.AnyAsync(c =>
                 (c.Name.Equals(color.Name, StringComparison.InvariantCultureIgnoreCase) 
@@ -40,19 +40,19 @@ namespace PosRi.Services.Repositories
                 && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateColor(EditColorDto color)
+        public async Task<bool> IsDuplicateColorAsync(EditColorDto color)
         {
             return await _dbContext.Colors.AnyAsync(c =>
                 (c.Name.Equals(color.Name, StringComparison.InvariantCultureIgnoreCase)
                  || c.RgbHex.Equals(color.RgbHex, StringComparison.InvariantCultureIgnoreCase)) && c.Id != color.Id && c.IsActive);
         }
 
-        public async Task<bool> ColorExists(int id)
+        public async Task<bool> ColorExistsAsync(int id)
         {
             return await _dbContext.Colors.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddColor(NewColorDto newColor)
+        public async Task<int> AddColorAsync(NewColorDto newColor)
         {
             var color = new Color
             {
@@ -71,7 +71,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditColor(EditColorDto editColor)
+        public async Task<bool> EditColorAsync(EditColorDto editColor)
         {
             var color = await _dbContext.Colors.FindAsync(editColor.Id);
 
@@ -81,7 +81,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteColor(int id)
+        public async Task<bool> DeleteColorAsync(int id)
         {
             var color = await _dbContext.Colors.FindAsync(id);
 

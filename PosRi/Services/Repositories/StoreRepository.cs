@@ -19,32 +19,32 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Store>> GetStores()
+        public async Task<IEnumerable<Store>> GetStoresAsync()
         {
             return await _dbContext.Stores.Where(store => store.IsActive).ToListAsync();
         }
 
-        public async Task<Store> GetStore(int storeId)
+        public async Task<Store> GetStoreAsync(int storeId)
         {
             return await _dbContext.Stores.FirstOrDefaultAsync(store => store.Id == storeId && store.IsActive);
         }
 
-        public async Task<bool> IsDuplicateStore(NewStoreDto newStore)
+        public async Task<bool> IsDuplicateStoreAsync(NewStoreDto newStore)
         {
             return await _dbContext.Stores.AnyAsync(store => store.Name == newStore.Name && store.IsActive);
         }
 
-        public async Task<bool> IsDuplicateStore(EditStoreDto editStore)
+        public async Task<bool> IsDuplicateStoreAsync(EditStoreDto editStore)
         {
             return await _dbContext.Stores.AnyAsync(store => store.Name == editStore.Name && store.Id != editStore.Id && store.IsActive);
         }
 
-        public async Task<bool> StoreExists(int id)
+        public async Task<bool> StoreExistsAsync(int id)
         {
             return await _dbContext.Stores.AnyAsync(store => store.Id == id && store.IsActive);
         }
 
-        public async Task<int> AddStore(NewStoreDto newStore)
+        public async Task<int> AddStoreAsync(NewStoreDto newStore)
         {
             var store = new Store
             {
@@ -64,7 +64,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditStore(EditStoreDto editStore)
+        public async Task<bool> EditStoreAsync(EditStoreDto editStore)
         {
             var store = await _dbContext.Stores.FindAsync(editStore.Id);
             store.Name = editStore.Name;
@@ -74,7 +74,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteStore(int id)
+        public async Task<bool> DeleteStoreAsync(int id)
         {
             var store = await _dbContext.Stores.FindAsync(id);
             store.IsActive = false;
@@ -82,7 +82,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<UserWithManyToManyRelation>> GetUsersByStore(int storeId)
+        public async Task<IEnumerable<UserWithManyToManyRelation>> GetUsersByStoreAsync(int storeId)
         {
             return await _dbContext.Users
                 .Where(u => u.IsActive && u.Stores.Any(store => store.StoreId == storeId))

@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var clients = await _clientService.GetClients();
+                var clients = await _clientService.GetClientsAsync();
                 var results = Mapper.Map<IEnumerable<ClientDto>>(clients);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var client = await _clientService.GetClient(id);
+                var client = await _clientService.GetClientAsync(id);
                 if (client == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _clientService.IsDuplicateClient(newClient))
+                if (await _clientService.IsDuplicateClientAsync(newClient))
                 {
                     ModelState.AddModelError("client", "Client already exists");
                     return BadRequest(ModelState);
                 }
 
-                var clientId = await _clientService.AddClient(newClient);
+                var clientId = await _clientService.AddClientAsync(newClient);
 
                 if (clientId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _clientService.ClientExists(client.Id))
+                if (!await _clientService.ClientExistsAsync(client.Id))
                 {
                     ModelState.AddModelError("client", "Client not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _clientService.IsDuplicateClient(client))
+                if (await _clientService.IsDuplicateClientAsync(client))
                 {
                     ModelState.AddModelError("client", "Client already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasClientEdited = await _clientService.EditClient(client);
+                var wasClientEdited = await _clientService.EditClientAsync(client);
 
                 if (wasClientEdited)
                 {
@@ -143,12 +143,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _clientService.ClientExists(id))
+                if (!await _clientService.ClientExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasClientDeleted = await _clientService.DeleteClient(id);
+                var wasClientDeleted = await _clientService.DeleteClientAsync(id);
 
                 if (wasClientDeleted)
                 {

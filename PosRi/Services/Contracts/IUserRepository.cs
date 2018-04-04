@@ -12,22 +12,22 @@ namespace PosRi.Services.Contracts
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<UserWithManyToManyRelation>> GetUsers();
+        Task<IEnumerable<UserWithManyToManyRelation>> GetUsersAsync();
 
-        Task<UserWithManyToManyRelation> GetUser(int userId);
+        Task<UserWithManyToManyRelation> GetUserAsync(int userId);
 
-        Task<User> Authenticate(LoginDto login);
+        Task<User> AuthenticateAsync(LoginDto login);
 
-        Task<bool> UserExists(int id);
+        Task<bool> UserExistsAsync(int id);
             
-        Task<bool> IsDuplicateUser(NewUserDto newUser);
+        Task<bool> IsDuplicateUserAsync(NewUserDto newUser);
 
-        Task<bool> IsDuplicateUser(EditUserDto editUser);
+        Task<bool> IsDuplicateUserAsync(EditUserDto editUser);
 
-        Task<int> AddUser(NewUserDto newUser);
+        Task<int> AddUserAsync(NewUserDto newUser);
 
-        Task<bool> EditUser(EditUserDto editUser);
+        Task<bool> EditUserAsync(EditUserDto editUser);
 
-        Task<bool> DeleteUser(int id);
+        Task<bool> DeleteUserAsync(int id);
     }
 }

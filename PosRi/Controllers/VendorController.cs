@@ -34,7 +34,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var vendors = await _vendorService.GetVendors();
+                var vendors = await _vendorService.GetVendorsAsync();
                 var results = Mapper.Map<IEnumerable<VendorDto>>(vendors);
                 return Ok(results);
             }
@@ -50,7 +50,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var vendor = await _vendorService.GetVendor(id);
+                var vendor = await _vendorService.GetVendorAsync(id);
                 if (vendor == null)
                     return NotFound();
 
@@ -75,13 +75,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _vendorService.IsDuplicateVendor(newVendor))
+                if (await _vendorService.IsDuplicateVendorAsync(newVendor))
                 {
                     ModelState.AddModelError("vendor", "Vendor already exists");
                     return BadRequest(ModelState);
                 }
 
-                var vendorId = await _vendorService.AddVendor(newVendor);
+                var vendorId = await _vendorService.AddVendorAsync(newVendor);
 
                 if (vendorId > 0)
                 {
@@ -107,19 +107,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _vendorService.VendorExists(vendor.Id))
+                if (!await _vendorService.VendorExistsAsync(vendor.Id))
                 {
                     ModelState.AddModelError("vendor", "Vendor not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _vendorService.IsDuplicateVendor(vendor))
+                if (await _vendorService.IsDuplicateVendorAsync(vendor))
                 {
                     ModelState.AddModelError("vendor", "Vendor already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasVendorEdited = await _vendorService.EditVendor(vendor);
+                var wasVendorEdited = await _vendorService.EditVendorAsync(vendor);
 
                 if (wasVendorEdited)
                 {
@@ -145,12 +145,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _vendorService.VendorExists(id))
+                if (!await _vendorService.VendorExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasVendorDeleted = await _vendorService.DeleteVendor(id);
+                var wasVendorDeleted = await _vendorService.DeleteVendorAsync(id);
 
                 if (wasVendorDeleted)
                 {

@@ -19,14 +19,14 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Vendor> GetVendor(int id)
+        public async Task<Vendor> GetVendorAsync(int id)
         {
             return await _dbContext.Vendors
                     .Include(v => v.State)
                     .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Vendor>> GetVendors()
+        public async Task<ICollection<Vendor>> GetVendorsAsync()
         {
             return await _dbContext.Vendors
                 .Include(v => v.State)
@@ -34,24 +34,24 @@ namespace PosRi.Services.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateVendor(NewVendorDto vendor)
+        public async Task<bool> IsDuplicateVendorAsync(NewVendorDto vendor)
         {
             return await _dbContext.Vendors.AnyAsync(c =>
                 (c.Email.Equals(vendor.Email, StringComparison.InvariantCultureIgnoreCase) || c.Rfc.Equals(vendor.Rfc, StringComparison.InvariantCultureIgnoreCase)) && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateVendor(EditVendorDto vendor)
+        public async Task<bool> IsDuplicateVendorAsync(EditVendorDto vendor)
         {
             return await _dbContext.Vendors.AnyAsync(c =>
                 (c.Email.Equals(vendor.Email, StringComparison.InvariantCultureIgnoreCase) || c.Rfc.Equals(vendor.Rfc, StringComparison.InvariantCultureIgnoreCase)) && c.Id != vendor.Id && c.IsActive);
         }
 
-        public async Task<bool> VendorExists(int id)
+        public async Task<bool> VendorExistsAsync(int id)
         {
             return await _dbContext.Vendors.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddVendor(NewVendorDto newVendor)
+        public async Task<int> AddVendorAsync(NewVendorDto newVendor)
         {
             var vendor = new Vendor
             {
@@ -76,7 +76,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditVendor(EditVendorDto editVendor)
+        public async Task<bool> EditVendorAsync(EditVendorDto editVendor)
         {
             var vendor = await _dbContext.Vendors.FindAsync(editVendor.Id);
 
@@ -93,7 +93,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteVendor(int id)
+        public async Task<bool> DeleteVendorAsync(int id)
         {
             var vendor = await _dbContext.Vendors.FindAsync(id);
 

@@ -9,20 +9,20 @@ namespace PosRi.Services.Contracts
 {
     public interface IColorRepository
     {
-        Task<Color> GetColor(int id);
+        Task<Color> GetColorAsync(int id);
 
-        Task<ICollection<Color>> GetColors();
+        Task<ICollection<Color>> GetColorsAsync();
 
-        Task<bool> IsDuplicateColor(NewColorDto color);
+        Task<bool> IsDuplicateColorAsync(NewColorDto color);
 
-        Task<bool> IsDuplicateColor(EditColorDto color);
+        Task<bool> IsDuplicateColorAsync(EditColorDto color);
 
-        Task<bool> ColorExists(int id);
+        Task<bool> ColorExistsAsync(int id);
 
-        Task<int> AddColor(NewColorDto newColor);
+        Task<int> AddColorAsync(NewColorDto newColor);
 
-        Task<bool> EditColor(EditColorDto color);
+        Task<bool> EditColorAsync(EditColorDto color);
 
-        Task<bool> DeleteColor(int id);
+        Task<bool> DeleteColorAsync(int id);
     }
 }

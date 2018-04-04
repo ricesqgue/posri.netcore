@@ -16,7 +16,7 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<ICollection<State>> GetStates()
+        public async Task<ICollection<State>> GetStatesAsync()
         {
             return await _dbContext.States.ToListAsync();
         }

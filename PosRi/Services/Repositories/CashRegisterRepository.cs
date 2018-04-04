@@ -19,17 +19,17 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<CashRegister> GetCashRegister(int id)
+        public async Task<CashRegister> GetCashRegisterAsync(int id)
         {
             return await _dbContext.CashRegisters.FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<CashRegister>> GetCashRegisters(int storeId)
+        public async Task<ICollection<CashRegister>> GetCashRegistersAsync(int storeId)
         {
             return await _dbContext.CashRegisters.Where(c => c.StoreId == storeId && c.IsActive).ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateCashRegister(int storeId, NewCashRegisterDto cashRegister)
+        public async Task<bool> IsDuplicateCashRegisterAsync(int storeId, NewCashRegisterDto cashRegister)
         {
             return await _dbContext.CashRegisters
                 .AnyAsync(c =>
@@ -37,7 +37,7 @@ namespace PosRi.Services.Repositories
                     c.StoreId == storeId && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateCashRegister(int storeId, EditCashRegisterDto cashRegister)
+        public async Task<bool> IsDuplicateCashRegisterAsync(int storeId, EditCashRegisterDto cashRegister)
         {
             return await _dbContext.CashRegisters
                 .AnyAsync(c =>
@@ -46,12 +46,12 @@ namespace PosRi.Services.Repositories
                     c.StoreId == storeId && c.IsActive);
         }
 
-        public async Task<bool> CashRegisterExists(int id)
+        public async Task<bool> CashRegisterExistsAsync(int id)
         {
             return await _dbContext.CashRegisters.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddCashRegister(int storeId, NewCashRegisterDto newCashRegister)
+        public async Task<int> AddCashRegisterAsync(int storeId, NewCashRegisterDto newCashRegister)
         {
             var cashRegister = new CashRegister
             {
@@ -71,7 +71,7 @@ namespace PosRi.Services.Repositories
 
         }
 
-        public async Task<bool> EditCashRegister(EditCashRegisterDto cashRegister)
+        public async Task<bool> EditCashRegisterAsync(EditCashRegisterDto cashRegister)
         {
             var editCashRegister = await _dbContext.CashRegisters.FindAsync(cashRegister.Id);
 
@@ -80,7 +80,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteCashRegister(int id)
+        public async Task<bool> DeleteCashRegisterAsync(int id)
         {
             var cashRegister = await _dbContext.CashRegisters.FindAsync(id);
 

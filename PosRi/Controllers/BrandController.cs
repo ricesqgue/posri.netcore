@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var brands = await _brandService.GetBrands();
+                var brands = await _brandService.GetBrandsAsync();
                 var results = Mapper.Map<IEnumerable<BrandDto>>(brands);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var brand = await _brandService.GetBrand(id);
+                var brand = await _brandService.GetBrandAsync(id);
                 if (brand == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _brandService.IsDuplicateBrand(newBrand))
+                if (await _brandService.IsDuplicateBrandAsync(newBrand))
                 {
                     ModelState.AddModelError("brand", "Brand already exists");
                     return BadRequest(ModelState);
                 }
 
-                var brandId = await _brandService.AddBrand(newBrand);
+                var brandId = await _brandService.AddBrandAsync(newBrand);
 
                 if (brandId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _brandService.BrandExists(brand.Id))
+                if (!await _brandService.BrandExistsAsync(brand.Id))
                 {
                     ModelState.AddModelError("brand", "Brand not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _brandService.IsDuplicateBrand(brand))
+                if (await _brandService.IsDuplicateBrandAsync(brand))
                 {
                     ModelState.AddModelError("brand", "Brand already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasBrandEdited = await _brandService.EditBrand(brand);
+                var wasBrandEdited = await _brandService.EditBrandAsync(brand);
 
                 if (wasBrandEdited)
                 {
@@ -143,12 +143,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _brandService.BrandExists(id))
+                if (!await _brandService.BrandExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasBrandDeleted = await _brandService.DeleteBrand(id);
+                var wasBrandDeleted = await _brandService.DeleteBrandAsync(id);
 
                 if (wasBrandDeleted)
                 {

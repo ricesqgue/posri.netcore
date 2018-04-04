@@ -19,37 +19,37 @@ namespace PosRi.Services.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Size> GetSize(int id)
+        public async Task<Size> GetSizeAsync(int id)
         {
             return await _dbContext.Sizes
                 .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<ICollection<Size>> GetSizes()
+        public async Task<ICollection<Size>> GetSizesAsync()
         {
             return await _dbContext.Sizes
                 .Where(c => c.IsActive)
                 .ToListAsync();
         }
 
-        public async Task<bool> IsDuplicateSize(NewSizeDto size)
+        public async Task<bool> IsDuplicateSizeAsync(NewSizeDto size)
         {
             return await _dbContext.Sizes.AnyAsync(c =>
                 c.Name.Equals(size.Name, StringComparison.InvariantCultureIgnoreCase) && c.IsActive);
         }
 
-        public async Task<bool> IsDuplicateSize(EditSizeDto size)
+        public async Task<bool> IsDuplicateSizeAsync(EditSizeDto size)
         {
             return await _dbContext.Sizes.AnyAsync(c =>
                 c.Name.Equals(size.Name, StringComparison.InvariantCultureIgnoreCase) && c.Id != size.Id && c.IsActive);
         }
 
-        public async Task<bool> SizeExists(int id)
+        public async Task<bool> SizeExistsAsync(int id)
         {
             return await _dbContext.Sizes.AnyAsync(c => c.Id == id && c.IsActive);
         }
 
-        public async Task<int> AddSize(NewSizeDto newSize)
+        public async Task<int> AddSizeAsync(NewSizeDto newSize)
         {
             var size = new Size
             {
@@ -67,7 +67,7 @@ namespace PosRi.Services.Repositories
             return 0;
         }
 
-        public async Task<bool> EditSize(EditSizeDto editSize)
+        public async Task<bool> EditSizeAsync(EditSizeDto editSize)
         {
             var size = await _dbContext.Sizes.FindAsync(editSize.Id);
 
@@ -76,7 +76,7 @@ namespace PosRi.Services.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteSize(int id)
+        public async Task<bool> DeleteSizeAsync(int id)
         {
             var size = await _dbContext.Sizes.FindAsync(id);
 

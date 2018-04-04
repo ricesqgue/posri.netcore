@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var sizes = await _sizeService.GetSizes();
+                var sizes = await _sizeService.GetSizesAsync();
                 var results = Mapper.Map<IEnumerable<SizeDto>>(sizes);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var size = await _sizeService.GetSize(id);
+                var size = await _sizeService.GetSizeAsync(id);
                 if (size == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _sizeService.IsDuplicateSize(newSize))
+                if (await _sizeService.IsDuplicateSizeAsync(newSize))
                 {
                     ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var sizeId = await _sizeService.AddSize(newSize);
+                var sizeId = await _sizeService.AddSizeAsync(newSize);
 
                 if (sizeId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _sizeService.SizeExists(size.Id))
+                if (!await _sizeService.SizeExistsAsync(size.Id))
                 {
                     ModelState.AddModelError("size", "Size not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _sizeService.IsDuplicateSize(size))
+                if (await _sizeService.IsDuplicateSizeAsync(size))
                 {
                     ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasSizeEdited = await _sizeService.EditSize(size);
+                var wasSizeEdited = await _sizeService.EditSizeAsync(size);
 
                 if (wasSizeEdited)
                 {
@@ -144,12 +144,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _sizeService.SizeExists(id))
+                if (!await _sizeService.SizeExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasSizeDeleted = await _sizeService.DeleteSize(id);
+                var wasSizeDeleted = await _sizeService.DeleteSizeAsync(id);
 
                 if (wasSizeDeleted)
                 {

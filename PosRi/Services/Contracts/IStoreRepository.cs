@@ -10,22 +10,22 @@ namespace PosRi.Services.Contracts
 {
     public interface IStoreRepository
     {
-        Task<IEnumerable<Store>> GetStores();
+        Task<IEnumerable<Store>> GetStoresAsync();
 
-        Task<Store> GetStore(int storeId);
+        Task<Store> GetStoreAsync(int storeId);
 
-        Task<bool> IsDuplicateStore(NewStoreDto newStore);
+        Task<bool> IsDuplicateStoreAsync(NewStoreDto newStore);
 
-        Task<bool> IsDuplicateStore(EditStoreDto editStore);
+        Task<bool> IsDuplicateStoreAsync(EditStoreDto editStore);
 
-        Task<bool> StoreExists(int id);
+        Task<bool> StoreExistsAsync(int id);
             
-        Task<int> AddStore(NewStoreDto newStore);
+        Task<int> AddStoreAsync(NewStoreDto newStore);
 
-        Task<bool> EditStore(EditStoreDto editStore);
+        Task<bool> EditStoreAsync(EditStoreDto editStore);
 
-        Task<bool> DeleteStore(int id);
+        Task<bool> DeleteStoreAsync(int id);
         
-        Task<IEnumerable<UserWithManyToManyRelation>> GetUsersByStore(int storeId);
+        Task<IEnumerable<UserWithManyToManyRelation>> GetUsersByStoreAsync(int storeId);
     }
 }

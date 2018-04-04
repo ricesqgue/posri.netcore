@@ -9,20 +9,20 @@ namespace PosRi.Services.Contracts
 {
     public interface IBrandRepository
     {
-        Task<Brand> GetBrand(int id);
+        Task<Brand> GetBrandAsync(int id);
 
-        Task<ICollection<Brand>> GetBrands();
+        Task<ICollection<Brand>> GetBrandsAsync();
 
-        Task<bool> IsDuplicateBrand(NewBrandDto brand);
+        Task<bool> IsDuplicateBrandAsync(NewBrandDto brand);
 
-        Task<bool> IsDuplicateBrand(EditBrandDto brand);
+        Task<bool> IsDuplicateBrandAsync(EditBrandDto brand);
 
-        Task<bool> BrandExists(int id);
+        Task<bool> BrandExistsAsync(int id);
 
-        Task<int> AddBrand(NewBrandDto newBrand);
+        Task<int> AddBrandAsync(NewBrandDto newBrand);
 
-        Task<bool> EditBrand(EditBrandDto brand);
+        Task<bool> EditBrandAsync(EditBrandDto brand);
 
-        Task<bool> DeleteBrand(int id);
+        Task<bool> DeleteBrandAsync(int id);
     }
 }
