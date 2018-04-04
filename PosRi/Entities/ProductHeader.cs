@@ -13,7 +13,7 @@ namespace PosRi.Entities
 
         [Required]
         [MaxLength(150)]
-        public string Code { get; set; }
+        public string Model { get; set; }
 
         [Required]
         [MaxLength(150)]
@@ -23,9 +23,9 @@ namespace PosRi.Entities
         [MaxLength(35)]
         public string ShortDescription { get; set; }
 
-        public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public int SubCategoryId { get; set; }
+        [ForeignKey("SubCategoryId")]
+        public SubCategory SubCategory { get; set; }
 
         public int BrandId { get; set; }
         [ForeignKey("BrandId")]
