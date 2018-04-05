@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using PosRi.Models.Response;
 
-namespace PosRi.Entities
+namespace PosRi.Models.Request.Product
 {
-    public class Product
+    public class EditProductDto
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
@@ -30,21 +31,10 @@ namespace PosRi.Entities
         [Required]
         public DateTime CreateDate { get; set; }
 
-        public int SizeId { get; set; }
-        [ForeignKey("SizeId")]
-        public Size Size { get; set; }
+        public SizeDto Size { get; set; }
 
-        public int ColorPrimaryId { get; set; }
-        [ForeignKey("ColorPrimaryId")]
-        public Color ColorPrimary { get; set; }
+        public ColorDto ColorPrimary { get; set; }
 
-        public int ColorSecondaryId { get; set; }
-        [ForeignKey("ColorSecondaryId")]
-        public Color ColorSecondary { get; set; }
-
-        public int ProductHeaderId { get; set; }
-        [ForeignKey("ProductHeaderId")]
-        public ProductHeader ProductHeader { get; set; }
-
+        public ColorDto ColorSecondary { get; set; }
     }
 }

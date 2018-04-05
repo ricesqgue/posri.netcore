@@ -124,9 +124,9 @@ namespace PosRi.Services.Repositories
                 c.Name.Equals(subCategory.Name, StringComparison.InvariantCultureIgnoreCase) && c.Id != subCategory.Id && c.IsActive && c.CategoryId == categoryId);
         }
 
-        public async Task<bool> SubCategoryExistsAsync(int id)
+        public async Task<bool> SubCategoryExistsAsync(int categoryId, int id)
         {
-            return await _dbContext.SubCategories.AnyAsync(s => s.Id == id && s.IsActive);
+            return await _dbContext.SubCategories.AnyAsync(s => s.Id == id && s.CategoryId == categoryId && s.IsActive);
         }
 
         public async Task<int> AddSubCategoryAsync(int categoryId, NewSubCategoryDto newSubCategory)

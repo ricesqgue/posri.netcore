@@ -72,6 +72,7 @@ namespace PosRi
             services.AddTransient<ICommonRepository, CommonRepository>();
             services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient<IVendorRepository, VendorRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +117,8 @@ namespace PosRi
                 cfg.CreateMap<Entities.State, Models.Response.StateDto>();
                 cfg.CreateMap<Entities.Client, Models.Response.ClientDto>();
                 cfg.CreateMap<Entities.Vendor, Models.Response.VendorDto>();
+                cfg.CreateMap<Entities.Product, Models.Response.ProductDto>();
+                cfg.CreateMap<Entities.ProductHeader, Models.Response.ProductHeaderDto>();
             });
 
             //

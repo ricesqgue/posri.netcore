@@ -33,7 +33,7 @@ namespace PosRi.Services.Contracts
 
         Task<bool> IsDuplicateSubCategoryAsync(int categoryId, EditSubCategoryDto subCategory);
 
-        Task<bool> SubCategoryExistsAsync(int id);
+        Task<bool> SubCategoryExistsAsync(int categoryId, int id);
 
         Task<int> AddSubCategoryAsync(int categoryId, NewSubCategoryDto newSubCategory);
 

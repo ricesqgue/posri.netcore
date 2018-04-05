@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using PosRi.Models.Response;
 
-namespace PosRi.Entities
+namespace PosRi.Models.Request.Product
 {
-    public class ProductHeader
+    public class EditProductHeaderDto
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
@@ -23,17 +24,10 @@ namespace PosRi.Entities
         [MaxLength(35)]
         public string ShortDescription { get; set; }
 
-        public int SubCategoryId { get; set; }
-        [ForeignKey("SubCategoryId")]
-        public SubCategory SubCategory { get; set; }
-
-        public int BrandId { get; set; }
-        [ForeignKey("BrandId")]
-        public Brand Brand { get; set; }
-
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        [Required]
+        public SubCategoryDto SubCategory { get; set; }
 
         [Required]
-        public bool IsActive { get; set; } = true;
+        public BrandDto Brand { get; set; }
     }
 }

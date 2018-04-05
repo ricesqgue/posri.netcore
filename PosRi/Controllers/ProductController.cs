@@ -6,34 +6,34 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PosRi.Models.Request.Category;
+using PosRi.Models.Request.Product;
 using PosRi.Models.Response;
 using PosRi.Services.Contracts;
 
 namespace PosRi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/category")]
-    public class CategoryController : Controller
+    [Route("api/Product")]
+    public class ProductController : Controller
     {
-        private readonly ICategoryRepository _categoryService;
-        private readonly ILogger<CategoryController> _logger;
+        private readonly IProductRepository _productRepository;
+        private readonly ILogger<ProductController> _logger;
 
-        private const string Route = "api/category";
+        private const string Route = "api/product";
 
-        public CategoryController(ICategoryRepository categoryService, ILogger<CategoryController> logger)
+        public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
         {
-            _categoryService = categoryService;
+            _productRepository = productRepository;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetProductHeaders()
         {
             try
             {
-                var categories = await _categoryService.GetCategoriesAsync();
-                var results = Mapper.Map<IEnumerable<CategoryDto>>(categories);
+                var productHeaders = await _productRepository.GetProductHeadersAsync();
+                var results = Mapper.Map<IEnumerable<ProductHeaderDto>>(productHeaders);
                 return Ok(results);
             }
             catch (Exception e)
@@ -44,15 +44,15 @@ namespace PosRi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategory([FromRoute] int id)
+        public async Task<IActionResult> GetProductHeader([FromRoute] int id)
         {
             try
             {
-                var category = await _categoryService.GetCategoryAsync(id);
-                if (category == null)
+                var productHeader = await _productRepository.GetProductHeaderAsync(id);
+                if (productHeader == null)
                     return NotFound();
 
-                var result = Mapper.Map<CategoryDto>(category);
+                var result = Mapper.Map<ProductHeaderDto>(productHeader);
 
                 return Ok(result);
             }
@@ -64,7 +64,7 @@ namespace PosRi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory([FromBody] NewCategoryDto newCategory)
+        public async Task<IActionResult> AddProductHeader([FromBody] NewProductHeaderDto newProductHeader)
         {
             try
             {
@@ -73,17 +73,17 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateCategoryAsync(newCategory))
+                if (await _productRepository.IsDuplicateProductHeaderAsync(newProductHeader))
                 {
-                    ModelState.AddModelError("category", "Category already exists");
+                    ModelState.AddModelError("productHeader", "A product already exists");
                     return BadRequest(ModelState);
                 }
 
-                var categoryId = await _categoryService.AddCategoryAsync(newCategory);
+                var productHeaderId = await _productRepository.AddProductHeaderAsync(newProductHeader);
 
-                if (categoryId > 0)
+                if (productHeaderId > 0)
                 {
-                    return Ok(categoryId);
+                    return Ok(productHeaderId);
                 }
 
                 return StatusCode(500, "An error ocurred in server");
@@ -96,7 +96,7 @@ namespace PosRi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditCategory([FromBody] EditCategoryDto category)
+        public async Task<IActionResult> EditProductHeader([FromBody] EditProductHeaderDto productHeader)
         {
             try
             {
@@ -105,21 +105,21 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExistsAsync(category.Id))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeader.Id))
                 {
-                    ModelState.AddModelError("category", "Category not found");
+                    ModelState.AddModelError("productHeader", "ProductHeader not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateCategoryAsync(category))
+                if (await _productRepository.IsDuplicateProductHeaderAsync(productHeader))
                 {
-                    ModelState.AddModelError("category", "Category already exists");
+                    ModelState.AddModelError("productHeader", "A product already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasCategoryEdited = await _categoryService.EditCategoryAsync(category);
+                var wasProductHeaderEdited = await _productRepository.EditProductHeaderAsync(productHeader);
 
-                if (wasCategoryEdited)
+                if (wasProductHeaderEdited)
                 {
                     return Ok();
                 }
@@ -134,7 +134,7 @@ namespace PosRi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory([FromRoute]int id)
+        public async Task<IActionResult> DeleteProductHeader([FromRoute]int id)
         {
             try
             {
@@ -143,14 +143,14 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExistsAsync(id))
+                if (!await _productRepository.ProductHeaderExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasCategoryDeleted = await _categoryService.DeleteCategoryAsync(id);
+                var wasProductHeaderDeleted = await _productRepository.DeleteProductHeaderAsync(id);
 
-                if (wasCategoryDeleted)
+                if (wasProductHeaderDeleted)
                 {
                     return Ok();
                 }
@@ -165,52 +165,52 @@ namespace PosRi.Controllers
             }
         }
 
-        [HttpGet("{categoryId}/subcategories")]
-        public async Task<IActionResult> GetSubCategories([FromRoute] int categoryId)
+        [HttpGet("{productHeaderId}/products")]
+        public async Task<IActionResult> GetProducts([FromRoute] int productHeaderId)
         {
             try
             {
-                if (!await _categoryService.CategoryExistsAsync(categoryId))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeaderId))
                 {
                     return NotFound();
                 }
-                var subCategories = await _categoryService.GetSubCategoriesAsync(categoryId);
-                var results = Mapper.Map<IEnumerable<SubCategoryDto>>(subCategories);
+                var products = await _productRepository.GetProductsAsync(productHeaderId);
+                var results = Mapper.Map<IEnumerable<ProductDto>>(products);
                 return Ok(results);
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route}/{productHeaderId}/products - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
 
-        [HttpGet("{categoryId}/subcategories/{id}")]
-        public async Task<IActionResult> GetSubCategory([FromRoute] int categoryId, [FromRoute] int id)
+        [HttpGet("{productHeaderId}/products/{id}")]
+        public async Task<IActionResult> GetProduct([FromRoute] int productHeaderId, [FromRoute] int id)
         {
             try
             {
-                if (!await _categoryService.CategoryExistsAsync(categoryId))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeaderId))
                 {
                     return NotFound();
                 }
-                var subCategory = await _categoryService.GetSubCategoryAsync(id);
-                if (subCategory == null)
+                var product = await _productRepository.GetProductAsync(id);
+                if (product == null)
                     return NotFound();
 
-                var result = Mapper.Map<SubCategoryDto>(subCategory);
+                var result = Mapper.Map<ProductDto>(product);
 
                 return Ok(result);
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"GET {Route}/{categoryId}/subcategories/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"GET {Route}/{productHeaderId}/products/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
 
-        [HttpPost("{categoryId}/subcategories")]
-        public async Task<IActionResult> AddSubCategory([FromRoute] int categoryId, [FromBody] NewSubCategoryDto newSubCategory)
+        [HttpPost("{productHeaderId}/products")]
+        public async Task<IActionResult> AddProduct([FromRoute] int productHeaderId, [FromBody] NewProductDto newProduct)
         {
             try
             {
@@ -219,35 +219,35 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExistsAsync(categoryId))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeaderId))
                 {
                     return NotFound();
                 }
 
-                if (await _categoryService.IsDuplicateSubCategoryAsync(categoryId, newSubCategory))
+                if (await _productRepository.IsDuplicateProductAsync(productHeaderId, newProduct))
                 {
-                    ModelState.AddModelError("subCategory", "Subcategory already exists");
+                    ModelState.AddModelError("product", "Product already exists");
                     return BadRequest(ModelState);
                 }
 
-                var subCategoryId = await _categoryService.AddSubCategoryAsync(categoryId, newSubCategory);
+                var productId = await _productRepository.AddProductAsync(productHeaderId, newProduct);
 
-                if (subCategoryId > 0)
+                if (productId > 0)
                 {
-                    return Ok(subCategoryId);
+                    return Ok(productId);
                 }
 
                 return StatusCode(500, "An error ocurred in server");
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"POST {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"POST {Route}/{productHeaderId}/products - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
 
-        [HttpPut("{categoryId}/subcategories")]
-        public async Task<IActionResult> EditSubCategory([FromRoute] int categoryId, [FromBody] EditSubCategoryDto subCategory)
+        [HttpPut("{productHeaderId}/products")]
+        public async Task<IActionResult> EditProduct([FromRoute] int productHeaderId, [FromBody] EditProductDto product)
         {
             try
             {
@@ -256,26 +256,26 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExistsAsync(categoryId))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeaderId))
                 {
                     return NotFound();
                 }
 
-                if (!await _categoryService.SubCategoryExistsAsync(categoryId, subCategory.Id))
+                if (!await _productRepository.ProductExistsAsync(productHeaderId, product.Id))
                 {
-                    ModelState.AddModelError("subCategory", "Sub category not found");
+                    ModelState.AddModelError("product", "Product not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _categoryService.IsDuplicateSubCategoryAsync(categoryId, subCategory))
+                if (await _productRepository.IsDuplicateProductAsync(productHeaderId, product))
                 {
-                    ModelState.AddModelError("subCategory", "Sub category already exists");
+                    ModelState.AddModelError("product", "Product already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasSubCategoryEdited = await _categoryService.EditSubCategoryAsync(subCategory);
+                var wasProductEdited = await _productRepository.EditProductAsync(product);
 
-                if (wasSubCategoryEdited)
+                if (wasProductEdited)
                 {
                     return Ok();
                 }
@@ -285,13 +285,13 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"PUT {Route}/{categoryId}/subcategories - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"PUT {Route}/{productHeaderId}/products - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
 
-        [HttpDelete("{categoryId}/subcategories/{id}")]
-        public async Task<IActionResult> DeleteSubCategory([FromRoute] int categoryId, [FromRoute] int id)
+        [HttpDelete("{productHeaderId}/products/{id}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productHeaderId, [FromRoute] int id)
         {
             try
             {
@@ -300,19 +300,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _categoryService.CategoryExistsAsync(categoryId))
+                if (!await _productRepository.ProductHeaderExistsAsync(productHeaderId))
                 {
                     return NotFound();
                 }
 
-                if (!await _categoryService.SubCategoryExistsAsync(categoryId, id))
+                if (!await _productRepository.ProductExistsAsync(productHeaderId, id))
                 {
                     return NotFound();
                 }
 
-                var wasSubCategoryDeleted = await _categoryService.DeleteSubCategoryAsync(id);
+                var wasProductDeleted = await _productRepository.DeleteProductAsync(id);
 
-                if (wasSubCategoryDeleted)
+                if (wasProductDeleted)
                 {
                     return Ok();
                 }
@@ -322,7 +322,7 @@ namespace PosRi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"DELETE {Route}/{categoryId}/subcategories/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
+                _logger.LogCritical($"DELETE {Route}/{productHeaderId}/products/{id} - {e.GetType().Name} - {e.Message} - {e.StackTrace}");
                 return StatusCode(500, "An error ocurred in server");
             }
         }
