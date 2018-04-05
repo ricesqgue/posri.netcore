@@ -25,12 +25,12 @@ namespace PosRi.Controllers
     public class LoginController : Controller
     {
         private readonly IConfiguration _config;
-        private readonly IUserRepository _userService;
+        private readonly IUserRepository _userRepository;
 
-        public LoginController(IConfiguration config, IUserRepository userService)
+        public LoginController(IConfiguration config, IUserRepository userRepository)
         {
             _config = config;
-            _userService = userService;
+            _userRepository = userRepository;
         }
 
         [AllowAnonymous]
@@ -41,7 +41,7 @@ namespace PosRi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var user = await _userService.AuthenticateAsync(login);
+            var user = await _userRepository.AuthenticateAsync(login);
 
             if (user == null)
                 return Unauthorized();

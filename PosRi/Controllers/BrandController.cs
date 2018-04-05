@@ -10,20 +10,21 @@ using PosRi.Models.Request.Brand;
 using PosRi.Models.Response;
 using PosRi.Services.Contracts;
 
+
 namespace PosRi.Controllers
 {
     [Produces("application/json")]
     [Route("api/brand")]
     public class BrandController : Controller
     {
-        private readonly IBrandRepository _brandService;
+        private readonly IBrandRepository _brandRepository;
         private readonly ILogger<BrandController> _logger;
 
         private const string Route = "api/brand";
 
-        public BrandController(IBrandRepository brandService, ILogger<BrandController> logger)
+        public BrandController(IBrandRepository brandRepository, ILogger<BrandController> logger)
         {
-            _brandService = brandService;
+            _brandRepository = brandRepository;
             _logger = logger;
         }
 
@@ -32,7 +33,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var brands = await _brandService.GetBrandsAsync();
+                var brands = await _brandRepository.GetBrandsAsync();
                 var results = Mapper.Map<IEnumerable<BrandDto>>(brands);
                 return Ok(results);
             }
@@ -48,7 +49,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var brand = await _brandService.GetBrandAsync(id);
+                var brand = await _brandRepository.GetBrandAsync(id);
                 if (brand == null)
                     return NotFound();
 
@@ -73,13 +74,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _brandService.IsDuplicateBrandAsync(newBrand))
+                if (await _brandRepository.IsDuplicateBrandAsync(newBrand))
                 {
                     ModelState.AddModelError("brand", "Brand already exists");
                     return BadRequest(ModelState);
                 }
 
-                var brandId = await _brandService.AddBrandAsync(newBrand);
+                var brandId = await _brandRepository.AddBrandAsync(newBrand);
 
                 if (brandId > 0)
                 {
@@ -105,19 +106,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _brandService.BrandExistsAsync(brand.Id))
+                if (!await _brandRepository.BrandExistsAsync(brand.Id))
                 {
                     ModelState.AddModelError("brand", "Brand not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _brandService.IsDuplicateBrandAsync(brand))
+                if (await _brandRepository.IsDuplicateBrandAsync(brand))
                 {
                     ModelState.AddModelError("brand", "Brand already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasBrandEdited = await _brandService.EditBrandAsync(brand);
+                var wasBrandEdited = await _brandRepository.EditBrandAsync(brand);
 
                 if (wasBrandEdited)
                 {
@@ -143,12 +144,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _brandService.BrandExistsAsync(id))
+                if (!await _brandRepository.BrandExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasBrandDeleted = await _brandService.DeleteBrandAsync(id);
+                var wasBrandDeleted = await _brandRepository.DeleteBrandAsync(id);
 
                 if (wasBrandDeleted)
                 {

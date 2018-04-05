@@ -16,14 +16,14 @@ namespace PosRi.Controllers
     [Route("api/color")]
     public class ColorController : Controller
     {
-        private readonly IColorRepository _colorService;
+        private readonly IColorRepository _colorRepository;
         private readonly ILogger<ColorController> _logger;
 
         private const string Route = "api/color";
 
-        public ColorController(IColorRepository colorService, ILogger<ColorController> logger)
+        public ColorController(IColorRepository colorRepository, ILogger<ColorController> logger)
         {
-            _colorService = colorService;
+            _colorRepository = colorRepository;
             _logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var colors = await _colorService.GetColorsAsync();
+                var colors = await _colorRepository.GetColorsAsync();
                 var results = Mapper.Map<IEnumerable<ColorDto>>(colors);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var color = await _colorService.GetColorAsync(id);
+                var color = await _colorRepository.GetColorAsync(id);
                 if (color == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _colorService.IsDuplicateColorAsync(newColor))
+                if (await _colorRepository.IsDuplicateColorAsync(newColor))
                 {
                     ModelState.AddModelError("color", "Color already exists");
                     return BadRequest(ModelState);
                 }
 
-                var colorId = await _colorService.AddColorAsync(newColor);
+                var colorId = await _colorRepository.AddColorAsync(newColor);
 
                 if (colorId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _colorService.ColorExistsAsync(color.Id))
+                if (!await _colorRepository.ColorExistsAsync(color.Id))
                 {
                     ModelState.AddModelError("color", "Color not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _colorService.IsDuplicateColorAsync(color))
+                if (await _colorRepository.IsDuplicateColorAsync(color))
                 {
                     ModelState.AddModelError("color", "Color already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasColorEdited = await _colorService.EditColorAsync(color);
+                var wasColorEdited = await _colorRepository.EditColorAsync(color);
 
                 if (wasColorEdited)
                 {
@@ -144,12 +144,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _colorService.ColorExistsAsync(id))
+                if (!await _colorRepository.ColorExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasColorDeleted = await _colorService.DeleteColorAsync(id);
+                var wasColorDeleted = await _colorRepository.DeleteColorAsync(id);
 
                 if (wasColorDeleted)
                 {

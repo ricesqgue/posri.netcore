@@ -16,14 +16,14 @@ namespace PosRi.Controllers
     [Route("api/size")]
     public class SizeController : Controller
     {
-        private readonly ISizeRepository _sizeService;
+        private readonly ISizeRepository _sizeRepository;
         private readonly ILogger<SizeController> _logger;
 
         private const string Route = "api/size";
 
-        public SizeController(ISizeRepository sizeService, ILogger<SizeController> logger)
+        public SizeController(ISizeRepository sizeRepository, ILogger<SizeController> logger)
         {
-            _sizeService = sizeService;
+            _sizeRepository = sizeRepository;
             _logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var sizes = await _sizeService.GetSizesAsync();
+                var sizes = await _sizeRepository.GetSizesAsync();
                 var results = Mapper.Map<IEnumerable<SizeDto>>(sizes);
                 return Ok(results);
             }
@@ -48,7 +48,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var size = await _sizeService.GetSizeAsync(id);
+                var size = await _sizeRepository.GetSizeAsync(id);
                 if (size == null)
                     return NotFound();
 
@@ -73,13 +73,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _sizeService.IsDuplicateSizeAsync(newSize))
+                if (await _sizeRepository.IsDuplicateSizeAsync(newSize))
                 {
                     ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var sizeId = await _sizeService.AddSizeAsync(newSize);
+                var sizeId = await _sizeRepository.AddSizeAsync(newSize);
 
                 if (sizeId > 0)
                 {
@@ -105,19 +105,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _sizeService.SizeExistsAsync(size.Id))
+                if (!await _sizeRepository.SizeExistsAsync(size.Id))
                 {
                     ModelState.AddModelError("size", "Size not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _sizeService.IsDuplicateSizeAsync(size))
+                if (await _sizeRepository.IsDuplicateSizeAsync(size))
                 {
                     ModelState.AddModelError("size", "Size already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasSizeEdited = await _sizeService.EditSizeAsync(size);
+                var wasSizeEdited = await _sizeRepository.EditSizeAsync(size);
 
                 if (wasSizeEdited)
                 {
@@ -144,12 +144,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _sizeService.SizeExistsAsync(id))
+                if (!await _sizeRepository.SizeExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasSizeDeleted = await _sizeService.DeleteSizeAsync(id);
+                var wasSizeDeleted = await _sizeRepository.DeleteSizeAsync(id);
 
                 if (wasSizeDeleted)
                 {

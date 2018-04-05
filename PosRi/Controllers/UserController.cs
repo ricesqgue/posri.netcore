@@ -18,13 +18,13 @@ namespace PosRi.Controllers
     [Route("api/user")]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userService;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<UserController> _logger;
         private const string Route = "api/user";
      
-        public UserController(IUserRepository userService, ILogger<UserController> logger)
+        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _logger = logger;
         }
         
@@ -33,7 +33,7 @@ namespace PosRi.Controllers
         {
             try
             {
-                var users = await _userService.GetUsersAsync();
+                var users = await _userRepository.GetUsersAsync();
                 var results = Mapper.Map<IEnumerable<UserDto>>(users);
                 return Ok(results);
             }
@@ -53,7 +53,7 @@ namespace PosRi.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                var user = await _userService.GetUserAsync(id);
+                var user = await _userRepository.GetUserAsync(id);
                 if (user == null)
                     return NotFound();
 
@@ -75,7 +75,7 @@ namespace PosRi.Controllers
             {
                 if (!User.HasClaim(c => c.Type == "UserId")) return Unauthorized();
                 int.TryParse(User.Claims.First(claim => claim.Type == "UserId").Value, out int userId);
-                var user = await _userService.GetUserAsync(userId);
+                var user = await _userRepository.GetUserAsync(userId);
                 var userDto = Mapper.Map<UserDto>(user);
                 return Ok(userDto);
 
@@ -97,13 +97,13 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (await _userService.IsDuplicateUserAsync(newUser))
+                if (await _userRepository.IsDuplicateUserAsync(newUser))
                 {
                     ModelState.AddModelError("username", "Username already exists");
                     return BadRequest(ModelState);
                 }
 
-                var userId = await _userService.AddUserAsync(newUser);
+                var userId = await _userRepository.AddUserAsync(newUser);
 
                 if (userId > 0)
                 {
@@ -129,19 +129,19 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _userService.UserExistsAsync(user.Id))
+                if (!await _userRepository.UserExistsAsync(user.Id))
                 {
                     ModelState.AddModelError("user", "User not found");
                     return BadRequest(ModelState);
                 }
 
-                if (await _userService.IsDuplicateUserAsync(user))
+                if (await _userRepository.IsDuplicateUserAsync(user))
                 {
                     ModelState.AddModelError("username", "Username already exists");
                     return BadRequest(ModelState);
                 }
 
-                var wasUserEdited = await _userService.EditUserAsync(user);
+                var wasUserEdited = await _userRepository.EditUserAsync(user);
 
                 if (wasUserEdited)
                 {
@@ -168,12 +168,12 @@ namespace PosRi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!await _userService.UserExistsAsync(id))
+                if (!await _userRepository.UserExistsAsync(id))
                 {
                     return NotFound();
                 }
 
-                var wasUserDeleted = await _userService.DeleteUserAsync(id);
+                var wasUserDeleted = await _userRepository.DeleteUserAsync(id);
 
                 if (wasUserDeleted)
                 {
